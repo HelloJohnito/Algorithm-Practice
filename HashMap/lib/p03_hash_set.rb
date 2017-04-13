@@ -9,12 +9,25 @@ class HashSet
   end
 
   def insert(key)
+    return false if self.include?(key)
+    @count += 1
+    hashed_key = key.hash % num_buckets
+    @store[hashed_key].push(key)
+    resize! if @count == num_buckets
   end
 
   def include?(key)
+    hashed_key = key.hash % num_buckets
+    @store[hashed_key].include?(key)
   end
 
   def remove(key)
+    hashed_key = key.hash % num_buckets
+    if @store[hashed_key].include?(key)
+      @store[hashed_key].delete(key)
+    else
+      return nil
+    end
   end
 
   private
@@ -28,5 +41,15 @@ class HashSet
   end
 
   def resize!
+    previous = @store
+    @store = Array.new(num_buckets * 2) { Array.new }
+
+    previous.each do |nums|
+      nums.each do |num|
+        i = num % num_buckets
+        @store[i].push(num)
+      end
+    end
+    @store
   end
 end
