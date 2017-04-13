@@ -25,6 +25,7 @@ class HashSet
     hashed_key = key.hash % num_buckets
     if @store[hashed_key].include?(key)
       @store[hashed_key].delete(key)
+      @count -= 1
     else
       return nil
     end
