@@ -43,6 +43,7 @@ class LRUCache
   def update_link!(link)
   end
 
+  # remove both the link and the reference from the hashmap
   def eject!
     rm_link = @store.first
     rm_link.remove
