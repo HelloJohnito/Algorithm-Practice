@@ -83,22 +83,22 @@ delete:   o(1)  o(n)
 
 wc if everything ends up in one bucket.
 
-###ListedLink
+###Linked List
 Link: key, value, next, prev
 
 Singly-linked-list
 - find => o(n)
-- push => o(1)
-- delete => o(1)
+- push => o(n) but if you keep track of @tail then it can be o(1)
+- delete => same as push
 
 Doubly-linked-list
 - insert => o(1)
 - [] => o(n)
 
           Avg.   wc
-get/read:       o(n)
-insert:   o(1)  o(n)(for update)
-delete:         o(n)
+get/read: o(n)   o(n)
+insert:   o(1)   o(n)(for update)
+delete:          o(n)
 
 ###HashMap
 Uses hashing set and array/linked list for the buckets
@@ -123,10 +123,10 @@ hash[7]= will reassign or append
 Hashmap is using a hashset with Linkedlists (key, value) for buckets
   you could use an array as well.
 
-get o(1) and o(n)
-insert o(1) and o(n)  amortized constant/
-delete o(1) and o(n)
-worse case is the same, where if all the nodes are stacked into one bucket.
+- get o(1) and o(n)
+- insert o(1) and o(n)  amortized constant
+- delete o(1) and o(n)
+- worse case is the same (if all the nodes are stacked into one bucket).
 
 
 ###Caches
@@ -138,14 +138,14 @@ example:
   coin => [coin, timestamp]
 }
 
-Hashmap using an array as a bucket
-Hashmaps keep track of the gets and sets and the array tracks the order of the objects. (Head, tail).
+- Hashmap using an array as a bucket
+- Hashmaps keep track of the gets and sets and the array tracks the order of the objects. (Head, tail).
 
-Tuples for buckets are not ordered so you have to iterate through to find the oldest one
+- Tuples for buckets are not ordered so you have to iterate through to find the oldest one
 
-ejection: o(n)
-insert: o(n)
-read: o(1)
+- ejection: o(n)
+- insert: o(n)
+- read: o(1)
 - o(n) from iteration to find timestamp
 
 ###LRU
@@ -154,8 +154,9 @@ Hashmaps keep track of the gets and sets and the linked list tracks the order of
 Least Recently Used
 Heuristic
 
-Here you don't have to iterate through the linked list. You have the head and the tail and there is no shifting when you insert for delete. You simply change the pointers.
+Here you don't have to iterate through the linked list. You have the head and the tail and there is no shifting when you insert or delete. You simply change the pointers.
 
+HashMap provides the reference and the linked list can then insert and delete without having to shift.
 
 
 <!-- ###Big o
