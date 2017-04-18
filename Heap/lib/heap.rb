@@ -54,10 +54,8 @@ class BinaryMinHeap
     # prc ||= Proc.new{ |el1, el2| el1 <=> el2 }
 
     children_indices = BinaryMinHeap.child_indices(len, parent_idx)
-
-
+    
     return array if children_indices.empty?
-
 
     if children_indices.length == 1
       child_idx = children_indices[0]
