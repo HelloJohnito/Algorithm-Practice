@@ -37,14 +37,14 @@ keep track of an index
 3 is greater than 2. next
 
 
-[2,3,4,1]
+[3,2,4,1]
      i
 4 is greater than 3
-swap
+swap the 3 and the 4
 
 [4,2,3,1]
        i
-1 is less than 4. next
+4 is greater than 1. next
 
 Our max heap is [4,3,2,1]
 now going swap the first and the last number
@@ -60,6 +60,7 @@ Heapify down with 1,3,2
 [3,1,2,4]
      i
 now swap with 3 and 2
+and i moves
 
 [2,1,3,4]
    i
@@ -91,4 +92,4 @@ We have our sorted array.
     - else
       - return array
 
-  - Heap_sort 
+  - Heap_sort
