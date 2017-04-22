@@ -2,10 +2,10 @@ require 'rspec'
 require 'topological_sort'
 
 describe 'TopologicalSort' do
-  let(:v1) { Vertex.new("1") }
-  let(:v2) { Vertex.new("2") }
-  let(:v3) { Vertex.new("3") }
-  let(:v4) { Vertex.new("4") }
+  let(:v1) { Vertex.new("Wash Markov") }
+  let(:v2) { Vertex.new("Feed Markov") }
+  let(:v3) { Vertex.new("Dry Markov") }
+  let(:v4) { Vertex.new("Brush Markov") }
   let(:vertices) { [] }
 
   before(:each) do
@@ -22,7 +22,7 @@ describe 'TopologicalSort' do
       [v1, v3, v2, v4]
     ]
 
-    1.times do
+    20.times do
       expect(solutions).to include(topological_sort(vertices.shuffle))
     end
   end

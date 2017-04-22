@@ -1,5 +1,4 @@
 class Vertex
-
   attr_reader :value, :in_edges, :out_edges
   def initialize(value)
     @value = value
