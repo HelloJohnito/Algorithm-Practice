@@ -50,3 +50,63 @@ self.sort2!(array, pivot_idx + 1, right_len, &prc)
 
 
 Sorting Notes
+
+Bubble Sort
+- Iterates through the Array, swaps with the elements in front if necessary
+- Time complexity o(n^2)
+- Space complexity o(1)
+- Stable
+
+Insertion Sort
+- Builds a sorted array as it goes
+- Sorts behind the Pointer
+- Time complexity o(n^2)
+- Space complexity o(1)
+- Stable
+
+Selection Sort
+- Finds the Min and Swaps it into the appropriate position. Repeat
+- Time complexity o(n^2)
+- Space complexity o(1)
+- Stable
+
+Merge Sort
+- Breaking input into many different pieces recursively and merging it back together
+- Time Complexity o(n log n)
+- Space Complexity o(n)
+- Stable
+
+Heap Sort
+- Turn array into a Heap going left to right
+- Extract the min or max going right to left
+- Time complexity - o(n log n)
+- Space - o(1)
+- Unstable
+
+Quick Sort
+- Compare elements to the Pivot
+- Time Complexity o(n log n) worsecase: o(n^2)
+- Space Complexity: bc/av - o (log n) wc: o(n)
+- Unstable for optimized but for the naive version it is stable
+- More stable than Heap
+
+Why do we use quicksort?
+- The way computer interacts with cache.
+- Cache can only hold a small portion of the array at all time. Heap sort jumps around too much.
+  It has to reload different parts of the chase
+
+Quicksort > Merge because of space complexity
+Quicksort > heap because due to the cache only able to hole small portions at a time.. Heap moves the numbers all over the place vs. Quicksort moves section by section. 
+
+STABILITY
+- keeps the previous sort
+- example: Sort by last name then sort by first name
+  - jesse Cox
+  - Jesse Lat
+  - Kush Patel
+  - Laura Chao
+
+Sorted Array
+- find o(log n)
+- insert o(n)
+- delete o(n)
