@@ -2,6 +2,10 @@
 # `reduce!` method. Effectively this just maintains an `index_map`
 # that associates values with indices in the heap.
 
+# index_map {
+#   value: index
+# }
+
 class BinaryMinHeap
   def initialize(&prc)
     self.store = []
@@ -18,15 +22,20 @@ class BinaryMinHeap
     count == 0
   end
 
+  # O (log(n)) worst case
   def extract
     raise "no element to extract" if count == 0
 
+    # swap min (idx 0) with last element in queue (idx self.count-1).
     self.class.swap!(store, index_map, 0, self.count - 1)
 
+    # pop off the min (former idx 0)
     val = store.pop
+    # remove from index_map
     index_map.delete(val)
 
     unless empty?
+      # ensure heap is still in order by swapping down the tree
       self.class.heapify_down(store, index_map, 0, &prc)
     end
 
@@ -38,15 +47,24 @@ class BinaryMinHeap
     store[0]
   end
 
+  # O (log(n)) worst case
   def push(val)
+    # val is the vertex from priority map's insert
     store << val
+    # add index to index_map at value
     index_map[val] = (store.length - 1)
     self.class.heapify_up(store, index_map, self.count - 1, &prc)
   end
 
+  # used when updating a key and value in the priority map.
+  # updates the index of a value, then has to heapify_up to ensure order
   def reduce!(val)
+    # val is the key from the priority map, aka the vertex
     index = index_map[val]
+    # this updates the priority queue (store) based on the
+    # updated costs
     self.class.heapify_up(store, index_map, index, &prc)
+    # no heapify_down because the updated cost will be better than previously
   end
 
   protected
@@ -129,6 +147,7 @@ class BinaryMinHeap
 
     parent_idx = parent_index(child_idx)
     child_val, parent_val = array[child_idx], array[parent_idx]
+    # remember prc.call is comparing costs of each vertex (child_val and parent_val)
     if prc.call(child_val, parent_val) >= 0
       # Heap property valid!
       return array
@@ -139,6 +158,7 @@ class BinaryMinHeap
   end
 
   def self.swap!(array, index_map, parent_idx, child_idx)
+    #swaps parent and child, then updates the index_map
     parent_val, child_val = array[parent_idx], array[child_idx]
 
     array[parent_idx], array[child_idx] = child_val, parent_val
