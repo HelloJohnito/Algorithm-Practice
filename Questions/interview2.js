@@ -192,3 +192,29 @@ function maxDuffelBagValue(cakeTypes, weightCapacity) {
 
   return maxValuesAtCapacities[weightCapacity];
 }
+
+//////////////////////////////////////////////////////////////////////////////////////
+//queue with two stacks
+
+class stackQueue{
+  constructor(){
+    this.stackIn = [];
+    this.stackOut = [];
+  }
+
+  enqueue(num){
+    this.stackIn.push(num);
+  }
+
+  dequeue(){
+    if(this.stackOut.length === 0){
+      while(this.stackIn.length !== 0){
+        this.stackOut.push(this.stackIn.pop());
+      }
+    }
+
+    return this.stackOut.pop();
+  }
+}
+
+//////////////////////////////////////
