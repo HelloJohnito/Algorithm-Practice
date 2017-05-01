@@ -217,4 +217,56 @@ class stackQueue{
   }
 }
 
-//////////////////////////////////////
+///////////////////////////////////////////////////////
+// Max Stack
+
+class maxstack{
+
+  constructor(){
+    this.stack = [] ;
+    this.stackRecord = [];
+    this.max = null;
+  }
+
+  getMax(){
+    return this.max;
+  }
+
+  push(item){
+    if(this.max === null){
+      this.max = item;
+    }
+    else if(item >= this.max){
+      this.stackRecord.push(this.max);
+      this.max = item;
+    }
+    this.stack.push(item);
+  }
+
+  pop(){
+    let popItem = this.stack.pop();
+    if(popItem === this.max){
+      this.max = this.stackRecord.pop();
+    }
+    return popItem;
+  }
+}
+
+// test = new maxstack()
+
+///////////////////////////////////////////////////
+// find the unique integer inside the array in o(1) space and o(n) time
+
+
+function findUniqueDeliveryId(deliveryIds) {
+
+    var uniqueDeliveryId = 0;
+
+    deliveryIds.forEach(function(deliveryId) {
+        uniqueDeliveryId ^= deliveryId;
+    });
+
+    return uniqueDeliveryId;
+}
+
+// findUniqueDeliveryId([1,2,2,3,1])
