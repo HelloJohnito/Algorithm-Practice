@@ -270,3 +270,46 @@ function findUniqueDeliveryId(deliveryIds) {
 }
 
 // findUniqueDeliveryId([1,2,2,3,1])
+
+//////////////////////////////////////////////////////////////////////////
+//Delete a Node from a linked list.
+
+
+function LinkedListNode(value) {
+    this.value = value;
+    this.next = null;
+}
+
+var a = new LinkedListNode('A');
+var b = new LinkedListNode('B');
+var c = new LinkedListNode('C');
+
+a.next = b;
+b.next = c;
+
+function deleteNode(node){
+  let nextNode= node.next;
+  node.value = nextNode.value;
+  node.next = node.next.next;
+}
+
+
+////////////////////////////////////////////////////
+// is this singlely linked list contain a cycle
+
+function containsCycle(node){
+  let speed1 = node;
+  let speed2 = node.next.next;
+
+  while(speed2 !== null && speed1 !== speed2){
+    speed1 = speed1.next;
+    speed2 = speed2.next.next;
+
+  }
+
+  if(speed1 === speed2){
+    return true;
+  }else{
+    return false;
+  }
+}
