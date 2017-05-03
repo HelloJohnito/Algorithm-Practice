@@ -2,7 +2,7 @@
 
 ###Set
 [true, true, false] => this shows that 0 and 1 exists but 2 does not.
-The problem arises when your input is [0,100]. You don't want to create an array with ta length of 100 just to store the information for two variable. Waste of Space.
+The problem arises when your input is [0,100]. You don't want to create an array with the length of 100 just to store the information for two variable. Waste of Space.
 
 ###IntSet
 buckets = [[], [], []]

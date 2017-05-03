@@ -102,3 +102,130 @@ function reverseCharacters(messageArray, startIndex, endIndex) {
       endIndex--;
   }
 }
+
+//////////////////////////////////////////////////////////////////////
+//parenthesis problem
+
+function getClosingParen(sentence, openingParenIndex) {
+  var openNestedParens = 0;
+
+  for (var position = openingParenIndex + 1; position < sentence.length; position++) {
+      var char = sentence[position];
+
+      if (char === '(') {
+          openNestedParens += 1;
+      } else if (char === ')') {
+          if (openNestedParens === 0) {
+              return position;
+          } else {
+              openNestedParens -= 1;
+          }
+      }
+  }
+
+  throw new Error('No closing parenthesis :(');
+}
+
+////////////////////////////////////////////////////////////////
+//stack parenthesis
+
+function parenthesisParser(parenthesis){
+  var stack = [];
+  var open = [ '[' , '(' , '{' ];
+  var close = [ ']' , ')' , '}' ];
+  var pairs = {
+    '[': ']',
+    '(' : ')',
+    '{' : '}'
+  };
+
+  for(let i = 0; i < parenthesis.length; i ++){
+    let par = parenthesis[i];
+
+    if(open.includes(par)){
+      stack.push(par);
+    } else if(close.includes(par)){
+      if(!stack.length){
+        return false;
+      }else{
+        let lastChar = stack.pop();
+
+        if(pairs[lastChar] !== par){
+          return false;
+        }
+      }
+    }
+  }
+  return true;
+}
+
+
+////////////////////////////////////////////////////////////
+// Permutation Palindrome
+
+function hasPalindromePermutation(theString) {
+
+  var unpairedCharacters = new Set();
+
+  for (var i = 0; i < theString.length; i++) {
+      var char = theString[i];
+
+      if (unpairedCharacters.has(char)) {
+          unpairedCharacters.delete(char);
+      } else {
+          unpairedCharacters.add(char);
+      }
+  }
+
+  return unpairedCharacters.size <= 1;
+}
+
+////////////////////////////////////////////////////////////////
+//permutation
+
+function permutation(string){
+
+  if(string.length <= 1){
+    return [string];
+  }
+
+  var withoutLast = string.slice(0,-1);
+  var lastChar = string[string.length -1];
+
+  var permutationsWithoutLast = permutation(withoutLast);
+
+  let allPermutations = [];
+
+  for(let i = 0; i < permutationsWithoutLast.length; i++){
+    let singlePermutation = permutationsWithoutLast[i];
+    for(let position = 0; position <= singlePermutation.length; position++){
+      let perm = singlePermutation.slice(0,position) + lastChar + singlePermutation.slice(position);
+      allPermutations.push(perm);
+    }
+  }
+  return allPermutations;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////// HighScore sorting
+
+function unsorted(scores, highScore){
+
+  let allPossibleScore = [];
+  for(let i = 0; i <= highScore; i++){
+    allPossibleScore.push(0);
+  }
+
+  for(let j = 0; j < scores.length; j++){
+    let score = scores[j];
+    allPossibleScore[score] ++;
+  }
+
+  let answer = [];
+  for(let k = 0; k < highScore; k++){
+    if(allPossibleScore[k] > 0){
+      for(let m = 0; m < allPossibleScore[k]; m++)
+        answer.push(k);
+    }
+  }
+  return answer;
+}
