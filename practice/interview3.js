@@ -231,4 +231,41 @@ function unsorted(scores, highScore){
 }
 
 //////////////////////////////////////////////////
-//
+//Shuffle in place
+
+//not in place
+
+function getRandom(floor, ceiling) {
+  return Math.floor(Math.random() * (ceiling - floor + 1)) + floor;
+}
+
+function notInPlaceShuffle(inputArray){
+  let copy = inputArray;
+  let answer = [];
+
+  while(copy.length){
+    let rand = getRandom(0,copy.length -1);
+    let num = copy[rand];
+    answer.push(num);
+    copy.splice(rand,1);
+  }
+  return answer;
+}
+
+
+function inPlaceShuffle(inputArray){
+
+  for(let index = 0; index < inputArray.length; index ++){
+    let randomIndex = getRandom(index, inputArray.length -1);
+
+    if(index !== randomIndex){
+      let temp = inputArray[index];
+      inputArray[index] = inputArray[randomIndex];
+      inputArray[randomIndex] = temp;
+    }
+  }
+
+  return inputArray;
+}
+
+//////////////////////////////////////////////////////////
