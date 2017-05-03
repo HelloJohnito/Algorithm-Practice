@@ -269,3 +269,47 @@ function inPlaceShuffle(inputArray){
 }
 
 //////////////////////////////////////////////////////////
+// Riffle Shuffle
+
+function isRiffleRecursive(cards, half1, half2, cardsIndex, index1, index2){
+
+  cardsIndex = cardsIndex || 0;
+  index1 = index1 || 0;
+  index2 = index2 || 0;
+
+  if(cardsIndex === cards.length) return true;
+
+  if(half1.length !== index1 && half1[index1] === cards[cardsIndex]){
+   index1 ++;
+  }
+  else if (half2.length !== index2 && half2[index2] === cards[cardsIndex]){
+    index2 ++;
+  } else {
+    return false;
+  }
+
+  cardsIndex ++;
+  return isRiffleRecursive(cards, half1, half2, cardsIndex, index1, index2);
+}
+
+
+function isRiffleIterative(cards, half1, half2){
+  let index1 = 0;
+  let index2 = 0;
+
+  for(let cardIndex = 0; cardIndex < cards.length; cardIndex ++){
+    if(index1 < half1.length && half1[index1] === cards[cardIndex]){
+      index1 ++;
+    }
+    else if(index2 < half2.length && half2[index2] === cards[cardIndex]){
+      index2 ++;
+    }
+    else{
+      return false;
+    }
+  }
+
+  return true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////
