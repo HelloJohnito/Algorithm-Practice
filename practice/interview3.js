@@ -313,3 +313,87 @@ function isRiffleIterative(cards, half1, half2){
 }
 
 ////////////////////////////////////////////////////////////////////////////////////
+
+//(1..n) range
+//n + 1 length
+
+//example [2,1,2,3,4] : range is 1 - 4 and length is 5. Find 2
+
+//o(nlogn) solution
+
+function findDuplicate(theArray){
+  let floor = 1;
+  let ceiling = theArray.length - 1;
+
+  while (floor < ceiling){
+    let midPoint = Math.floor((ceiling + floor) / 2);
+    let lowerFloor = floor;
+    let lowerCeiling = midPoint;
+    let higherFloor = midPoint + 1;
+    let higherCeiling = ceiling;
+
+    let lengthOfLowerRange = lowerCeiling - lowerFloor + 1;
+    let lowerBoundCount = 0;
+    let element;
+
+    for(let arrayIndex = 0; arrayIndex < theArray.length; arrayIndex ++){
+      element = theArray[arrayIndex];
+
+      if(element <= lowerCeiling && element >= lowerFloor) {
+        lowerBoundCount += 1;
+      }
+    }
+
+
+    if(lowerBoundCount > lengthOfLowerRange){
+      //in the lower bound
+      floor = lowerFloor;
+      ceiling = lowerCeiling;
+    } else {
+      //in the upper bound
+      floor = higherFloor;
+      ceiling = higherCeiling;
+    }
+  }
+  return floor;
+}
+
+
+function findDup(theArray){
+  //first go to the end
+  //find the length of the cycle
+  //then stick with the length of the cycle to find the entry point of the cycle.
+  //return the position of the cycle
+
+  let headIndex = theArray.length;
+  let tailIndex = headIndex;
+  let arrayLength = theArray.length;
+
+  //Go to the end of the list
+  for(let i = 0; i <= arrayLength; i++){
+    tailIndex  = theArray[tailIndex - 1];
+  }
+
+  //find the length of the cycle
+  let cycleCount = 1;
+  let currentIndex = theArray[tailIndex - 1];
+  while(tailIndex !== currentIndex){
+    cycleCount += 1;
+    currentIndex = theArray[currentIndex - 1];
+  }
+
+  //stick
+  tailIndex = headIndex;
+  for(let i = 0; i < cycleCount; i ++){
+    headIndex = theArray[headIndex - 1];
+  }
+
+  //find the first node in the cycle. this will be the value with multiple pointers
+  //pointed to it. AKA Duplicated number
+  while(tailIndex !== headIndex){
+    headIndex = theArray[headIndex - 1];
+    tailIndex = theArray[tailIndex - 1];
+  }
+
+  return tailIndex;
+}
