@@ -49,3 +49,31 @@ function main() {
     }
 
 }
+
+/////////////////////////////////////////////////////////////
+//Flatland Space Stations
+
+function main() {
+    var n_temp = readLine().split(' ');
+    var n = parseInt(n_temp[0]);
+    var m = parseInt(n_temp[1]);
+    c = readLine().split(' ');
+    c = c.map(Number);
+
+    let answer = -Infinity;
+
+    for(let i = 0; i < n; i++){
+        let subAnswerMin = Infinity;
+        for(let j = 0; j < c.length; j++){
+            let distance = Math.abs(i - c[j])
+            if(subAnswerMin > distance){
+                subAnswerMin = distance;
+            }
+        }
+
+        if(answer < subAnswerMin){
+            answer = subAnswerMin;
+        }
+    }
+    // console.log(answer)
+}
