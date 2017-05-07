@@ -93,10 +93,10 @@ Quick Sort
 Why do we use quicksort?
 - The way computer interacts with cache.
 - Cache can only hold a small portion of the array at all time. Heap sort jumps around too much.
-  It has to reload different parts of the chase
+  It has to reload different parts of the cache
 
 Quicksort > Merge because of space complexity
-Quicksort > heap because due to the cache only able to hole small portions at a time.. Heap moves the numbers all over the place vs. Quicksort moves section by section. 
+Quicksort > heap because due to the cache only able to hole small portions at a time.. Heap moves the numbers all over the place vs. Quicksort moves section by section.
 
 STABILITY
 - keeps the previous sort

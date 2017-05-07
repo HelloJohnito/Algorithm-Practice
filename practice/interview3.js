@@ -358,7 +358,7 @@ function findDuplicate(theArray){
   return floor;
 }
 
-
+//o(1) solution
 function findDup(theArray){
   //first go to the end
   //find the length of the cycle

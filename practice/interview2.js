@@ -1,8 +1,10 @@
 //Web crawler, how to save space. Instead of using a set what can you use to save storage.
+//tries
 function webCrawlerNewStorage(word, startRoot){
   let root = startRoot || {};
   let currentNode = root;
   let isNewWord = false;
+
   for(let i = 0; i < word.length; i++){
     let char = word[i];
 
@@ -18,6 +20,7 @@ function webCrawlerNewStorage(word, startRoot){
     isNewWord = true;
     currentNode["end"] = {};
   }
+  
   return isNewWord;
 }
 
