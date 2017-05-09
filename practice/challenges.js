@@ -21,6 +21,45 @@ function checkPerm(string1, string2){
         map.set(string2[j], map.get(string2[j]) - 1) ;
       }
     }
+    else {
+      return false;
+    }
   }
   return map.size === 0;
 }
+
+
+////////////////////////////////////////////////////////
+//replace space with %20;
+
+function encodeSpaces(url) {
+  if (!url || url.length === 0) {
+    return url;
+  }
+
+  let spaceCount = 0;
+  for (let i = 0; i < url.length; ++i) {
+    if (url[i] === ' ') {
+      ++spaceCount;
+    }
+  }
+
+  let newLength = url.length + 2 * spaceCount;
+
+  let newUrl = [];
+  for(let i = url.length - 1; i >= 0; i--){
+    if(url[i] === " "){
+      newUrl[newLength - 1] = "0";
+      newUrl[newLength - 2] = "2";
+      newUrl[newLength - 3] = "%";
+      newLength -= 3;
+    }
+    else {
+      newUrl[newLength - 1] = url[i];
+      newLength -= 1;
+    }
+  }
+  return newUrl.join("");
+}
+
+//////////////////////////////////////////////////////////
