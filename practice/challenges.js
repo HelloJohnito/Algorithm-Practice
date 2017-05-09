@@ -120,3 +120,128 @@ function stringCompression(string){
   answer += currentLetter + count.toString();
   return answer;
 }
+
+
+/////////////////////////////////////////////////
+// rotate array.
+
+//TRY AGAIN...
+
+array = [
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+]
+
+array2 = [
+  [1,2,3,4],
+  [5,6,7,8],
+  [9,10,11,12],
+  [13,14,15,16]
+];
+
+
+function rotateMatrix(array){
+  let answerArray = array.slice();
+  let rotatingValues = array[0].slice();
+  let lastNumStack = [];
+
+  for(let i = 1; i < array.length; i++){
+    if(i !== array.length - 1){
+      rotatingValues.push(array[i][array[i].length -1])
+      lastNumStack.push(array[i][0]);
+    }
+    else{
+      let reverse = array[i].slice();
+      reverse.reverse();
+      rotatingValues = rotatingValues.concat(reverse);
+    }
+  }
+
+  for(i = lastNumStack.length - 1; i >= 0; i --){
+    rotatingValues.push(lastNumStack[i])
+  }
+
+  let numberToRotate = array.length - 1;
+  let rotatedValues = rotate(rotatingValues, numberToRotate);
+  let answerArray[0] = rotatedValues.splice(0, answerArray.length);
+
+  for(let i = 1; i < answerArray.length; i++){
+
+    if(i !== answerArray.length - 1){
+      answerArray[i][0] = rotatedValues.pop();
+      answerArray[i][answerArray[i].length - 1] = rotatedValues.shift();
+    }
+    else {
+      answerArray[i] = rotatedValues.reverse();
+    }
+  }
+  return answerArray;
+}
+
+function rotate(originalArray, num = 1){
+  let rotatedArray =[];
+  for(let i = 0; i < originalArray.length; i++){
+    let rotateIndex = (i + num) % (originalArray.length);
+    rotatedArray[rotateIndex] = originalArray[i];
+  }
+  return rotatedArray;
+}
+
+// rotateMatrix(array)
+
+/////////////////////////////////////////////////////////////
+//Zero Matrix
+
+function zeroMatrix(matrix){
+  let setRow = new Set();
+  let setCol = new Set();
+
+  for(let row = 0; row < matrix.length - 1; row++){
+    for(let col = 0; col < matrix[row].length -1; col ++){
+      if(matrix[row][col] === 0){
+        setRow.add(row);
+        setCol.add(col);
+      }
+    }
+  }
+
+  let i;
+  //check Row
+  for(i = 0; i < matrix.length - 1; i++){
+    if(setRow.has(i)){
+      setRowToZero(matrix, i);
+    }
+  }
+
+  //check col
+  for(i = 0; i < matrix.length - 1; i++){
+    if(setCol.has(i)){
+      setColToZero(matrix, i);
+    }
+  }
+
+  return matrix;
+}
+
+function setRowToZero(matrix, row){
+  for(let i = 0; i < matrix[0].length; i++){
+    matrix[row][i] = 0;
+  }
+}
+
+function setColToZero(matrix, col){
+  for(let i = 0; i < matrix.length; i++){
+    matrix[i][col] = 0;
+  }
+}
+
+// zeroMatrix([[0,2,3],[4,5,6]])
+
+//////////////////////////////////////////////////////
+//String Rotation
+//assume you have access to toSubstring which returns true is the word is a substring of another. With this method, create stringRotation that checks if a string is a rotation of the other.
+
+function stringRotation(str1, str2){
+  
+}
