@@ -243,5 +243,13 @@ function setColToZero(matrix, col){
 //assume you have access to toSubstring which returns true is the word is a substring of another. With this method, create stringRotation that checks if a string is a rotation of the other.
 
 function stringRotation(str1, str2){
-  
+  if(str1.length === str2.length && str1.length > 0){
+    let str1str1 = str1 + str1;
+    return toSubstring(str1str1, str2); // given method
+    //bottlewaterbottlewater is substring of waterbottle and it is rotated.
+  }
+  else{
+    return false;
+  }
+
 }
