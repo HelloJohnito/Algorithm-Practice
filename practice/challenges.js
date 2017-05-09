@@ -63,3 +63,60 @@ function encodeSpaces(url) {
 }
 
 //////////////////////////////////////////////////////////
+//One Edit away:
+
+function oneAway(str1, str2){
+  if(Math.abs(str1.length - str2.length) > 1){
+    return false;
+  }
+
+  let smallerString = str1.length >= str2.length ? str2 : str1;
+  let largerString =  str1.length < str2.length ? str2 : str1;
+
+  let index1 = 0;
+  let index2 = 0;
+  let editedOnce = false;
+
+  while(index1 < smallerString.length && index2 < largerString.length){
+    if(smallerString[index1] === largerString[index2]){
+      index1 ++;
+      index2 ++;
+    }
+    else{
+      if(editedOnce){
+        return false;
+      }else{
+        editedOnce = true;
+        if(smallerString.length === largerString.length){
+          index1 ++;
+          index2 ++;
+        }else{
+          index2 ++;
+        }
+      }
+    }
+  }
+  return true;
+}
+
+/////////////////////////////////////////////////////////////
+//String compression aaabbbcc = a3b3c2
+
+function stringCompression(string){
+  let count = 1;
+  let currentLetter = string[0];
+  let answer = "";
+
+  for(let i = 1; i < string.length; i++){
+    if(currentLetter === string[i]){
+      count += 1;
+    }
+    else {
+      answer += currentLetter + count.toString();
+      currentLetter = string[i];
+      count = 1;
+    }
+  }
+  answer += currentLetter + count.toString();
+  return answer;
+}
