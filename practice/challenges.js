@@ -253,3 +253,74 @@ function stringRotation(str1, str2){
   }
 
 }
+
+//////////////////////////////////////////////////////////
+//linked lists
+
+class Node {
+  constructor(value){
+    this.value = value;
+    this.next = null;
+  }
+}
+
+
+class LinkedList {
+  constructor(startingValue){
+    this.head = new Node(startingValue);
+    this.tail = null;
+  }
+
+  add(value){
+    if(this.tail === null){
+      this.tail = new Node(value);
+      this.head.next = this.tail;
+    }
+    else {
+      this.tail.next = new Node(value);
+      this.tail = this.tail.next;
+    }
+    return true;
+  }
+
+  /////////////////////////////////////////////////////
+  //remove Dups
+  removeDup(){
+    let current = this.head;
+    let holder = new Set();
+    while(current.next !== null){
+      console.log(current)
+      if(holder.has(current.next.value)){
+        current.next = current.next.next;
+        if (current.next === null) break;
+      }
+      else{
+        holder.add(current.value);
+      }
+      current = current.next;
+    }
+  }
+
+  ////////////////////////////////////////////////////////////
+  //kth from the end Linked List
+  kthFromEnd(k){
+    let first = this.head;
+    let second = this.head;
+    for(let i = 0; i < k - 1; i++){
+      first = first.next;
+    }
+
+    while(first.next !== null){
+      first = first.next;
+      second = second.next;
+    }
+    return second
+  }
+}
+
+// let l = new LinkedList(2)
+// l.add(4)
+// l.add(5)
+// l.add(2)
+// l.removeDup()
+// l.head
