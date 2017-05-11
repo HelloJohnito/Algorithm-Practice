@@ -421,3 +421,47 @@ function sumLinkedBackward(link1, link2){
 
 ///////////////////////////////////////////////////////
 //Palindrome
+
+
+
+
+
+
+///////////////////////////////////////////////////////
+//find the start of the loop
+
+function startOfLoop(head){
+  //first we want to find the collision point
+    // where fast === slow
+  //When you find the collision point, leave one pointer there and the other to the head of the node.
+  //The loop entry point is k nodes away from both the head and the collision point.
+  //Move both node at the same time until they meet.
+  let startNode = head.head;
+  let fast = startNode.next.next;
+  let slow = startNode.next;
+
+  while(fast !== slow){
+    if(fast === null || fast.next === null){
+      return false;
+    }
+
+    fast = fast.next.next;
+    slow = slow.next;
+  }
+
+  slow = startNode;
+
+  while(fast !== slow){
+    fast = fast.next;
+    slow = slow.next;
+  }
+
+  return fast.value;
+}
+
+// let l = new LinkedList(1)
+// l.add(2)
+// let three = l.add(3)
+// l.add(4)
+// let m = l.add(5)
+// m.next = three

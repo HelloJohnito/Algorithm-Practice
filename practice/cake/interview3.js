@@ -365,6 +365,8 @@ function findDup(theArray){
   //then stick with the length of the cycle to find the entry point of the cycle.
   //return the position of the cycle
 
+
+  //since we are traversing through an array like a linked list, we start from the end.
   let headIndex = theArray.length;
   let tailIndex = headIndex;
   let arrayLength = theArray.length;
