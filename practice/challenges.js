@@ -324,3 +324,100 @@ class LinkedList {
 // l.add(2)
 // l.removeDup()
 // l.head
+
+///////////////////////////////////////////////////
+//sum of linked list backward
+
+//example: 617 + 295 = 912 :: 7->1->6 + 5->9->2
+
+function sumLinkedBackward(link1, link2){
+  let linkOne = link1.head;
+  let linkTwo = link2.head;
+  let remainder = 0;
+  let value;
+  let sum;
+
+  solutionLink = new LinkedList(null);
+  let solutionNode = solutionLink.head
+  while (linkOne !== null && linkTwo !== null){
+    sum = linkOne.value + linkTwo.value + remainder;
+    value = sum % 10;
+    remainder = Math.floor(sum/10);
+
+    solutionNode.next = new Node(value)
+    solutionNode = solutionNode.next;
+    linkOne = linkOne.next;
+    linkTwo = linkTwo.next;
+  }
+
+  if(linkOne !== null){
+    while(linkOne !== null){
+      value = linkOne.value + remainder
+      solutionNode.next = new Node(value);
+      remainder = 0;
+      solutionNode = solutionNode.next
+      linkOne = linkOne.next
+    }
+  } else if(linkTwo !== null){
+      value = linkTwo.value + remainder
+      solutionNode.next = new Node(value);
+      remainder = 0;
+      solutionNode = solutionNode.next;
+      linkTwo = linkTwo.next;
+  }
+
+  if(remainder > 0){
+    solutionNode.next = new Node(remainder);
+  }
+
+  return solutionLink.head.next
+}
+
+//example: 617 + 295 = 912 :: 6->1->7 + 2->9->5
+
+// not finished
+// function sumLinkedForward(link1, link2){
+//   let linkOne = link1.head;
+//   let linkTwo = link2.head;
+//   let remainder = 0;
+//   let sum;
+//
+//   solutionLink = new LinkedList(null);
+//   let solutionNode = solutionLink.head
+//
+//   let previousValue = linkOne.value + linkTwo.value;
+//   if(previousValue >= 10){
+//     solutionNode.next = new Node(previousValue / 10);
+//     previousValue = Math.floor(previousValue % 10);
+//     solutionNode = solutionNode.next
+//   }
+//
+//   linkOne = linkOne.next;
+//   linkTwo = linkTwo.next;
+//
+//   while (linkOne !== null && linkTwo !== null){
+//     let sum = linkOne.value + linkTwo.value;
+//
+//     if(sum >= 10){
+//       currentValue = sum % 10;
+//       remainder = Math.floor(sum/10);
+//       previousValue += remainder;
+//     }
+//     else {
+//       remainder = 0;
+//       currentValue = sum;
+//     }
+//
+//     solutionNode.next = new Node(previousValue);
+//     solutionNode = solutionNode.next;
+//     previousValue = currentValue;
+//     linkOne = linkOne.next;
+//     linkTwo = linkTwo.next;
+//   }
+//
+//   solutionNode.next = new Node(previousValue);
+//   return solutionLink.head.next
+// }
+
+///////////////////////////////////////////////////////
+//Palindrome
