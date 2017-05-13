@@ -90,7 +90,33 @@ function median(array1,array2){
 ////////////////////////////////////////////////////////
 //longest Palidrome
 
-var maxLength = 0;
+// var maxLength = 0;
+// var startingPoint = 0;
+//
+// function longestPalindrome(s) {
+//   if(s.length <= 1) return s;
+//
+//   for(let i = 0; i < s.length; i++){
+//     expand(s, i, i); // odd number
+//     expand(s, i, i + 1); // even number
+//   }
+//   let endingPoint = maxLength - startingPoint;
+//   return s.slice(startingPoint, endingPoint);
+// }
+//
+// function expand(string, j, k){
+//   while(j >= 0 && k < string.length){
+//     j--;
+//     k++;
+//   }
+//   if(maxLength < k - j + 1){
+//     startingPoint = j + 1;
+//     maxLength = k - j + 1;
+//   }
+// }
+
+
+var maxWord = "";
 var startingPoint = 0;
 
 function longestPalindrome(s) {
@@ -100,17 +126,53 @@ function longestPalindrome(s) {
     expand(s, i, i); // odd number
     expand(s, i, i + 1); // even number
   }
-  let endingPoint = maxLength - startingPoint;
-  return s.slice(startingPoint, endingPoint);
+  // let endingPoint = maxWord.length - startingPoint;
+  // return s.slice(startingPoint, endingPoint);
+  return maxWord;
 }
 
 function expand(string, j, k){
-  while(j >= 0 && k < string.length){
+  while(j >= 0 && k < string.length && string[j] === string[k]){
     j--;
     k++;
   }
-  if(maxLength < k - j + 1){
+
+  let currentWord = string.slice(j+1, k);
+  if(maxWord.length <= currentWord.length){
     startingPoint = j + 1;
-    maxLength = k - j + 1;
+    maxWord = currentWord;
   }
 }
+
+/////////////////////////////////////////////////
+//missing number
+
+var missingNumber = function(nums) {
+    var n = nums.length;
+    var sum = ((n*n) + n) / 2; //Triangular series formula. Get the sum of range(0..nums.length)
+    var currentSum = 0;
+
+    for(var i = 0; i < nums.length; i++){
+        currentSum += nums[i];
+    }
+
+    return sum - currentSum;
+};
+
+///////////////////////////////////////////////////
+//longest prefix
+
+let longestCommonPrefix = function(strs) {
+  let common = strs[0];
+  let i = 1;
+
+  while(i < strs.length){
+    while(strs[i].indexOf(common) !== 0){
+      common = common.slice(0, common.length - 1);
+    }
+    i++;
+  }
+  return common;
+};
+
+// longestCommonPrefix(["hello", "he", "helmet"])
