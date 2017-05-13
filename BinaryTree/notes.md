@@ -42,3 +42,16 @@ void postOrderTraversal(TreeNode node){
     postOrderTraversal(currentNode);
   }
 }
+
+
+- Complete Binary Tree
+  - Every level of the tree is fully filled except for perhaps the last level.
+
+- Full Binary Tree
+  - Every node has zero or two children.
+
+- Perfect Binary Tree
+  - Both full and completed.
+
+- Depth represents the number of nodes from the root to the currentNode.
+- Height represents the number of edges from the currentNode to the leaf node (lowest node).
