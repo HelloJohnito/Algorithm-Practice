@@ -176,3 +176,50 @@ let longestCommonPrefix = function(strs) {
 };
 
 // longestCommonPrefix(["hello", "he", "helmet"])
+
+///////////////////////////////////////////////////
+//threeSum
+
+// For example, given array S = [-1, 0, 1, 2, -1, -4],
+// A solution set is:
+// [
+//   [-1, 0, 1],
+//   [-1, -1, 2]
+// ]
+
+function threeSum(nums) {
+  let answer = [];
+  nums.sort(function(a,b){
+    return a - b;
+  });
+
+  for(let i = 0; i <= nums.length - 3; i++){
+    if(i === 0 || nums[i] > nums[i - 1]){
+      let j = i + 1;
+      let k = nums.length - 1;
+
+      while(j !== k){
+        if(nums[i] + nums[j] + nums[k] === 0){
+          answer.push([nums[i], nums[j], nums[k]]);
+
+        }
+
+        if(nums[i] + nums[j] + nums[k] < 0){
+          let currentj = j;
+          while(nums[currentj] === nums[j] && j < k){
+            nums[currentj] = nums[j];
+            j++;
+          }
+        }
+        else{
+          let currentk = k;
+          while(nums[currentk] === nums[k] && j < k){
+            nums[currentk] = nums[k];
+            k--;
+          }
+        }
+      }
+    }
+  }
+  return answer;
+}
