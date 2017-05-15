@@ -198,3 +198,116 @@ function balancedTree(head){
   }
   return true;
 }
+
+/////////////////////////////////////////////////////////////////////////////
+//Validate BST
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+//find the in order successor
+
+//if right child exists. return the left most child
+//else
+  //go up to parent until the node is node's parent's left node.
+
+function nextNode(node){
+  let current = node;
+  //if right child exists, return the left most child
+  if(current.right){
+    current = current.right;
+    while(current.left !== null){
+      current = current.left;
+    }
+    return current;
+  }
+  //if right child does not exist, return the node that is node's parent's left node
+  else{
+    if(current.parent === null) return null;
+    while(current.parent.left !== current && current.parent !== null){
+      current = current.parent;
+    }
+    if(current.parent === null){
+      return null;
+    }
+    else {
+      return current.parent;
+    }
+  }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//Topological Sort
+// dependency graph.
+
+class Graph{
+  constructor(value){
+    this.value = value
+    this.out = [];
+    this.in = [];
+  }
+
+  static addEdges(node1, node2){
+    node1.out.push(node2);
+    node2.in.push(node1);
+  }
+
+  static removeEdges(node1, node2){
+    let indexNode2 = node1.out.indexOf(node2);
+    let indexNode1 = node2.in.indexOf(node1);
+    node1.out.splice(indexNode2);
+    node2.in.splice(indexNode1);
+  }
+}
+
+
+let a = new Graph("a");
+let b = new Graph("b");
+let c = new Graph("c");
+let d = new Graph("d");
+let e = new Graph("e");
+let f = new Graph("f");
+
+Graph.addEdges(a,d);
+Graph.addEdges(f,b);
+Graph.addEdges(b,d);
+Graph.addEdges(f,a);
+Graph.addEdges(d,c);
+
+function topologicalSort(array){
+  let order = [];
+  let visited = new Set();
+
+  for(let i = 0; i < array.length; i++){
+    if(visited.has(array[i])){
+      continue;
+    }
+    topologicalSortUtil(array[i]);
+  }
+
+  function topologicalSortUtil(node1){
+
+    if(visited.has(node1)){
+      return;
+    }
+
+    visited.add(node1);
+    node1.out.forEach((n) => {
+      topologicalSortUtil(n); // recurse
+    });
+
+    order.push(node1.value);
+  }
+
+  return order.reverse();
+}
+
+// array = [a,b,c,d,e,f];
+// topologicalSort(array);
+
+///////////////////////////////////////////////////////////
