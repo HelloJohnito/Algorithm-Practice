@@ -223,3 +223,37 @@ function threeSum(nums) {
   }
   return answer;
 }
+
+/////////////////////////////////////////////////////////////
+//Phone text: 
+
+var letterCombinations = function(digits) {
+    if(digits.length === 0) return [];
+    let phone = {
+        1 : ["*"],
+        2 : ["a", "b", "c"],
+        3 : ["d", "e", "f"],
+        4 : ["g", "h", "i"],
+        5 : ["j", "k", "l"],
+        6 : ["m", "n", "o"],
+        7 : ["p", "q", "r", "s"],
+        8 : ["t", "u", "v"],
+        9 : ["w", "x", "y", "z"],
+        0 : []
+    };
+
+    let answer = phone[parseInt(digits[0])];
+    let subAnswer = [];
+    for(let digitIndex = 1; digitIndex < digits.length; digitIndex++){
+
+      let compare = phone[digits[digitIndex]];
+      for(let answerIndex = 0; answerIndex < answer.length; answerIndex ++){
+        for(let compareIndex = 0; compareIndex < compare.length; compareIndex ++){
+          subAnswer.push(answer[answerIndex] + compare[compareIndex]);
+        }
+      }
+      answer = subAnswer;
+      subAnswer = [];
+    }
+    return answer;
+};

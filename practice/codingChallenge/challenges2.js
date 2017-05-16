@@ -304,10 +304,37 @@ function topologicalSort(array){
     order.push(node1.value);
   }
 
-  return order.reverse();
+  return order.reverse(); // could use stack
 }
 
 // array = [a,b,c,d,e,f];
 // topologicalSort(array);
 
 ///////////////////////////////////////////////////////////
+//common ancestors
+//if the node has points to the parent
+//find the depth of two node then place them in the same level.
+//Move both at the same time.
+
+//if no pointer to parent
+//DFS. When you find the target return that target back
+// else return null
+//when a node receives two not null values, then that is the diverge point. return that value back.
+
+function lca(root, n1, n2){
+  if(root === null) return null;
+  if(root === n1 || root === n2) return root;
+
+  let left = lca(root.left, n1, n2);
+  let right = lca(root.right, n1, n2);
+
+  //receive two not null values. Found diverge point
+  if(left !== null && right !== null) return root;
+  //return null if both sides are null
+  if(left === null && right === null) return null;
+
+  //return the side that is not null
+  left !== null ? left : right;
+}
+
+//////////////////////////////////////////////////////////
