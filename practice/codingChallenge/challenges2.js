@@ -395,3 +395,111 @@ var isValid = function(s) {
 
     return stack.length === 0 ? true : false;
 };
+
+////////////////////////////////////////////////////////////
+//sorting two merged linked lists
+
+var mergeTwoLists = function(l1, l2) {
+    let merged = new ListNode(null);
+    let head = merged;
+    let node1 = l1;
+    let node2 = l2;
+
+    while(node1 !== null && node2 !== null){
+        if(node1.val < node2.val){
+            merged.next = new ListNode(node1.val);
+            merged = merged.next;
+            node1 = node1.next;
+        } else{
+            merged.next = new ListNode(node2.val);
+            merged = merged.next;
+            node2 = node2.next;
+        }
+    }
+
+    if(node1 === null){
+        while(node2 !== null){
+            merged.next = new ListNode(node2.val);
+            merged = merged.next;
+            node2 = node2.next;
+        }
+    } else {
+        while(node1 !== null){
+            merged.next = new ListNode(node1.val);
+            merged = merged.next;
+            node1  = node1.next;
+        }
+    }
+
+    return head.next;
+};
+
+/////////////////////////////////////////////////////
+//print all parentheses
+
+var generateParenthesis = function(numParentheses) {
+  let answer = [];
+
+  function generateParenthesisRecurse(open, close, output){
+    if(open === numParentheses && close === numParentheses){
+      return answer.push(output);
+    }
+
+    if(open < numParentheses){
+      generateParenthesisRecurse(open + 1, close, output + "(");
+    }
+    if(close < open){
+      generateParenthesisRecurse(open, close + 1, output + ")");
+    }
+  }
+
+  generateParenthesisRecurse(0,0,"");
+  return answer;
+};
+
+//////////////////////////////////////////////////////////
+//check if word is a substring of longer word
+//use KMP algorithm
+// o(n) time complexity
+//o(n) space complecxity
+
+var strStr = function(haystack, needle) {
+  //find the prefix and the suffix for needle
+  let fix = createPrefixSuffix(needle);
+  let needleIndex = 0;
+  let haystackIndex = 0;
+
+  while(haystackIndex < haystack.length){
+
+    if(haystack[haystackIndex] === needle[needleIndex]){
+      if(needleIndex === needle.length - 1) return true;
+      needleIndex ++;
+    }
+    else {
+      //set needle index to the right of the prefix that equaled the suffix
+      if(needleIndex !== 0){
+        needleIndex = fix[needleIndex - 1];
+      }
+    }
+    
+    haystackIndex ++;
+  }
+  return false;
+};
+
+function createPrefixSuffix(needle){
+  let fix = [0];
+  let i = 0;
+  let j = 1;
+  while(j < needle.length){
+    if(needle[i] === needle[j]){
+      fix.push(i + 1);
+      i++;
+    } else {
+      fix.push(0);
+    }
+
+    j++;
+  }
+  return fix;
+}
