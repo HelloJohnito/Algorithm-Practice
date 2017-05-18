@@ -97,7 +97,7 @@ function dfs(node, target){
 }
 
 ///////////////////////////////////////////////////////////
-//create a Binary tree with ana array.
+//create a Binary tree with an array.
 
 function createBinarySearchTree(array){
 
@@ -119,7 +119,7 @@ function createBinarySearchTree(array){
 //List of depths
 //Solution options:
 //1) Use 2 queues to keep track of each level
-//2) Begine by placing a root and a null then place a null inside after each level
+//2) Begin by placing a root and a null then place a null inside after each level
 //3) Use a level counter that keeps track of the elements in the level and a current counter which keeps track of how many nodes there are for the next round.
 
 function levelDepths(head){
@@ -247,7 +247,7 @@ function nextNode(node){
 
 class Graph{
   constructor(value){
-    this.value = value
+    this.value = value;
     this.out = [];
     this.in = [];
   }
@@ -337,4 +337,61 @@ function lca(root, n1, n2){
   left !== null ? left : right;
 }
 
-//////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+// check if tree2 is a subtree of tree1
+
+//use preorder traversal and compare the two strings
+//you have to sub the nulls with a mark
+
+function checkSubString(tree1, tree2){
+  let ordered1 = preOrder(tree1, []);
+  let ordered2 = preOrder(tree2, []);
+
+  if(ordered1.indexOf(ordered2) !== -1){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function preOrder(tree, order){
+    if(tree === null){
+      return order.push("!!");
+      // return;
+    }
+
+    order.push(tree.value);
+    preOrder(tree.left, order);
+    preOrder(tree.right, order);
+
+    return order.toString();
+}
+
+/////////////////////////////////////////////////////////
+//parentheses
+
+var isValid = function(s) {
+    let par = {
+        "(": ")",
+        "{": "}",
+        "[": "]"
+    };
+
+    let stack = [];
+
+    for(let i = 0; i < s.length; i++){
+        let char = s[i];
+
+        if(par[char]){      //checks front parentheses
+            stack.push(char);
+        }else{              //checks back parentheses
+            if(par[stack[stack.length - 1]] === char){
+                stack.pop();
+            } else {
+                return false;
+            }
+        }
+    }
+
+    return stack.length === 0 ? true : false;
+};

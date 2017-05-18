@@ -225,7 +225,7 @@ function threeSum(nums) {
 }
 
 /////////////////////////////////////////////////////////////
-//Phone text: 
+//Phone text:
 
 var letterCombinations = function(digits) {
     if(digits.length === 0) return [];
@@ -256,4 +256,39 @@ var letterCombinations = function(digits) {
       subAnswer = [];
     }
     return answer;
+};
+
+///////////////////////////////////////////////////////////////////
+//linked list question: delete kth node
+
+var removeNthFromEnd = function(head, n) {
+    let firstNode = head;
+    let secondNode = head;
+    let previousNode = null;
+
+    if(head.next === null){
+        return [];
+    }
+
+    let size = 0;
+    while(size < n && firstNode.next !== null){
+        firstNode = firstNode.next;
+        size ++;
+    }
+
+    while(firstNode !== null){
+        firstNode = firstNode.next;
+        previousNode = secondNode;
+        secondNode = secondNode.next;
+    }
+
+    if(size === n){
+        previousNode.next = secondNode.next;
+        secondNode.next = null;
+    }
+    else {
+        head = head.next;
+    }
+
+    return head;
 };
