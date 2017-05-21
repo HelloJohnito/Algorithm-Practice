@@ -7,30 +7,30 @@ var addTwoNumbers = function(l1, l2) {
     let listLinkHead = new ListNode(0);
     let current = listLinkHead;
     let carry = 0;
-    let x
-    let y
-    let sum
+    let x;
+    let y;
+    let sum;
 
     while(l1 || l2){
         x = l1 ? l1.val : 0;
         y = l2 ? l2.val : 0;
-        sum = x + y + carry
+        sum = x + y + carry;
 
-        current.next = new ListNode(sum%10)
-        current = current.next
+        current.next = new ListNode(sum%10);
+        current = current.next;
 
         carry = sum >= 10 ? 1 : 0;
 
-        l1 = l1? l1.next : 0
-        l2 = l2? l2.next : 0
+        l1 = l1? l1.next : 0;
+        l2 = l2? l2.next : 0;
     }
 
     if(carry > 0){
         current.next = new ListNode(carry);
     }
 
-    return listLinkHead.next
-}
+    return listLinkHead.next;
+};
 
 /////////////////////////////////////////////////////
 //Length of Longest Substrings
@@ -458,7 +458,7 @@ var isValidSudoku = function(board) {
           return false;
         }
 
-        //add to sets 
+        //add to sets
         rowSet.add(board[row][col]);
         colSet[col].add(board[row][col]);
         subBoxes[`[${rowIndex},${colIndex}]`].add(board[row][col]);
@@ -466,4 +466,47 @@ var isValidSudoku = function(board) {
     }
   }
   return true;
+};
+
+///////////////////////////////////////////////////////////////////////////
+//find the first missing positive number
+//solve in o(n) time and constant space.
+
+//o(n) solution
+var firstMissingPositive = function(nums) {
+  //first segregate the positive and the negative.
+
+  let j = 0;
+  for(let i = 0; i < nums.length; i++){
+    if(nums[i] <= 0){
+      let temp = nums[i];
+      nums[i] = nums[j];
+      nums[j] =temp;
+      j ++;
+    }
+  }
+
+  //iterate through the positive numbers by using j as the starting point
+  //look at the (index = nums[k]value) and mark the value at index to a negative
+  //nums[nums[k] + j - 1] to a negative (-1 because the index starts at 0)
+
+ for(let k = j; k < nums.length; k++){
+   let index = Math.abs(nums[k]) + j - 1;
+    if(nums[index] !== undefined){
+      nums[index] = nums[index] * -1;
+    }
+  }
+
+  //iterate through the positive section and return the
+  //first positive number's index and add 1 and subtract j.
+  //if there is none, add the m + 1.
+  //example [0,1,2,3,4] answer is 4 + 1 = 5
+  let m = j;
+  while(m < nums.length){
+    if(nums[m] > 0){
+      return 1 + m - j;
+    }
+    m++;
+  }
+    return m - j + 1;
 };
