@@ -292,3 +292,178 @@ var removeNthFromEnd = function(head, n) {
 
     return head;
 };
+
+/////////////////////////////////////////////////////
+//find the index the target number from an array of sorted but rotated array.
+
+//[3,4,5,6,1,2,], target 2 == 5
+
+//binary search revision. compare the front number with the mid number.
+
+var search = function(nums, target) {
+  let front = nums[0];
+  let midIndex = Math.floor(nums.length/2);
+
+  if(target === nums[midIndex]){
+    return midIndex;
+  }else if(nums.length <= 1){
+    return -1;
+  }
+
+  //go left
+  if(front > nums[midIndex]){
+    if(target >= front || target < nums[midIndex]){
+      return search(nums.slice(0, midIndex), target);
+    }
+  }
+  else if(front < nums[midIndex]){
+    if(target >= front && target < nums[midIndex]){
+      return search(nums.slice(0, midIndex), target);
+    }
+  }
+
+  //go right
+  let results = search(nums.slice(midIndex + 1, nums.length), target);
+  return results === -1 ? -1 : results + 1 + midIndex;
+};
+
+////////////////////////////////////////////////////////////
+//search for a range
+
+var searchRange = function(nums, target) {
+  let min = 0;
+  let max = nums.length - 1;
+
+  //binary search here.
+  while( min <= max ){
+    let midIndex = Math.floor((max + 1 + min)/2);
+
+    if(nums[midIndex] === target){
+      //go left and right until you find the starting and the ending point
+      return sparse(nums, midIndex, target);
+    }
+    else if(nums[midIndex] > target){
+      //check left
+      max = midIndex - 1;
+    }
+    else {
+      min = midIndex + 1;
+    }
+  }
+
+  return [-1, -1];
+};
+
+function sparse(a, midIndex, target){
+  let startingPoint = midIndex;
+  let endingPoint = midIndex;
+  while((startingPoint >= 0 || endingPoint < a.length) && (a[startingPoint] === target || a[endingPoint] === target)){
+    if(a[startingPoint] === target){
+      startingPoint -= 1;
+    }
+    if(a[endingPoint] === target){
+      endingPoint += 1;
+    }
+  }
+  return [startingPoint + 1, endingPoint - 1];
+}
+
+//different solution
+var searchRange = function(nums, target) {
+    let arrayOfIndex = [];
+
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] === target){
+            arrayOfIndex.push(i);
+        }
+    }
+
+    if(arrayOfIndex.length === 0){
+        return [-1,-1];
+    }
+
+    if(arrayOfIndex.length === 1){
+        return [arrayOfIndex[0], arrayOfIndex[0]];
+    }
+
+    return [arrayOfIndex[0], arrayOfIndex[arrayOfIndex.length - 1]];
+};
+var searchRange = function(nums, target) {
+    let arrayOfIndex = [];
+
+    for(let i = 0; i < nums.length; i++){
+        if(nums[i] === target){
+            arrayOfIndex.push(i);
+        }
+    }
+
+    if(arrayOfIndex.length === 0){
+        return [-1,-1];
+    }
+
+    if(arrayOfIndex.length === 1){
+        return [arrayOfIndex[0], arrayOfIndex[0]];
+    }
+
+    return [arrayOfIndex[0], arrayOfIndex[arrayOfIndex.length - 1]];
+};
+
+/////////////////////////////////////////////////////////////////////////
+//check if unfinished board is a valid sudoku game.
+
+var isValidSudoku = function(board) {
+  let colSet = {
+    0: new Set(),
+    1: new Set(),
+    2: new Set(),
+    3: new Set(),
+    4: new Set(),
+    5: new Set(),
+    6: new Set(),
+    7: new Set(),
+    8: new Set()
+  }
+
+  let subBoxes = {
+    '[0,0]': new Set(),
+    '[0,1]': new Set(),
+    '[0,2]': new Set(),
+    '[1,0]': new Set(),
+    '[1,1]': new Set(),
+    '[1,2]': new Set(),
+    '[2,0]': new Set(),
+    '[2,1]': new Set(),
+    '[2,2]': new Set()
+  }
+
+  for(let row = 0; row < board.length; row ++){
+    let rowSet = new Set();
+    for(let col = 0; col < board.length; col ++){
+      if(board[row][col] !== "."){
+        //row and col
+        if(rowSet.has(board[row][col])) return false;
+        if(colSet[col].has(board[row][col])) return false;
+
+        //subBoxes
+        //[
+          // [0,0], [0,1], [0,2],
+          // [1,0], [1,1], [1,2],
+          // [2,0], [2,1], [2,2]
+        // ]
+
+        let rowIndex = Math.floor(row/3);
+        let colIndex = Math.floor(col/3);
+
+        if(subBoxes[`[${rowIndex},${colIndex}]`].has(board[row][col])){
+          return false;
+        }
+
+        //add to sets 
+        rowSet.add(board[row][col]);
+        colSet[col].add(board[row][col]);
+        subBoxes[`[${rowIndex},${colIndex}]`].add(board[row][col]);
+      }
+    }
+  }
+  return true;
+};
