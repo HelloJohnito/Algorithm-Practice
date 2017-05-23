@@ -510,3 +510,24 @@ var firstMissingPositive = function(nums) {
   }
     return m - j + 1;
 };
+
+///////////////////////////////////////////////////////////////
+//permutation
+
+var permute = function(nums) {
+    if(nums.length <= 1){
+        return [nums];
+    }
+
+    let last = nums[nums.length - 1];
+    let previous = permute(nums.slice(0,nums.length -1));
+    let totalPerm = [];
+
+    for(let i = 0; i < previous.length; i++){
+        for(let j = 0; j <= previous[i].length; j++){
+            totalPerm.push(previous[i].slice(0,j).concat([last]).concat(previous[i].slice(j, previous.length)));
+        }
+    }
+
+    return totalPerm;
+};
