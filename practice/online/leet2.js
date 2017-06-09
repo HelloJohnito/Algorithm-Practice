@@ -17,3 +17,65 @@ var maxSubArray = function(arr) {
   }
   return maxSum;
 };
+
+
+///////////////////////////////////////////////////////////////
+// spiral order
+
+var spiralOrder = function(matrix) {
+
+  let answer = [];
+
+  while(true){
+    //first row
+    if(matrix.length === 0 || matrix[0].length === 0) break;
+    answer = answer.concat(matrix.shift());
+
+    //rightside
+    if(matrix.length === 0 || matrix[0].length === 0) break;
+    for(let i = 0; i < matrix.length; i++){
+      answer.push(matrix[i].pop());
+    }
+
+    //bottom
+    if(matrix.length === 0 || matrix[0].length === 0) break;
+    answer = answer.concat(matrix.pop().reverse());
+
+    //leftside
+    if(matrix.length === 0 || matrix[0].length === 0) break;
+    for(let i = matrix.length - 1; i >=0 ; i--){
+      answer.push(matrix[i].shift());
+    }
+  }
+
+    return answer;
+};
+
+// spiralOrder(a)
+
+////////////////////////////////////////////////////////
+//plus one
+
+var plusOne = function(digits) {
+  if(digits[digits.length - 1] === 9){
+
+    let index = digits.length - 1;
+    digits[index] = 0;
+    index -= 1;
+
+    while(digits[index] === 9){
+      digits[index] = 0;
+      index-=1;
+    }
+
+    if(index < 0){
+      digits.unshift(1);
+    } else{
+      digits[index] += 1;
+    }
+
+  } else {
+    digits[digits.length - 1] += 1;
+  }
+  return digits;
+};
