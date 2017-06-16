@@ -79,3 +79,57 @@ var plusOne = function(digits) {
   }
   return digits;
 };
+
+
+/////////////////////////////////////////////////////////////
+//ZigZag
+
+// convert("john", 3)
+// [ ["j", ""]
+//   ["o", "n"]
+//   ["h", ""] ]
+
+// convert("john", 4)
+// [ ["j", ""]
+//   ["o", ""]
+//   ["h", "n"]
+//   ["n",  ""]]
+
+var convert = function(s, numRows) {
+
+  if(numRows <= 1){
+    return s;
+  }
+
+  let matrix = [];
+  for(let i = 0; i < numRows; i++){
+    matrix.push([]);
+  }
+
+  let row = 0;
+  let col = 0;
+  let ascending = true;
+
+  for(let i = 0; i < s.length; i++){
+    let letter = s[i];
+    matrix[row][col] = letter;
+
+    if(row === numRows - 1 || row === 0){
+      ascending = ascending ? false : true;
+    }
+
+    if(ascending){
+      row -= 1;
+      col += 1;
+    } else {
+      row += 1;
+    }
+  }
+
+  let answer = "";
+  for(let i = 0; i < numRows; i++){
+    answer += matrix[i].join("");
+  }
+
+  return answer;
+};
