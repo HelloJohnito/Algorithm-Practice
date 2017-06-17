@@ -133,3 +133,55 @@ var convert = function(s, numRows) {
 
   return answer;
 };
+
+///////////////////////////////////////////////////////////
+// sum three closest
+
+var threeSumClosest = function(nums, target) {
+  let closest = -Infinity;
+  let difference = 0;
+
+  nums.sort(function(a, b){
+    return a-b;
+  });
+
+  for(let i = 0; i < nums.length; i++){
+
+    let j = i + 1;
+    let k = nums.length - 1;
+
+    while(j < k){
+      let sumThree = nums[i] + nums[j] + nums[k];
+      // console.log(" ")
+      // console.log(`j is ${j} and k is ${k}`)
+      // console.log(`sumThree: ${sumThree}`)
+      // console.log(`closest: ${closest}`)
+      // console.log(`difference: ${difference}`)
+
+      if(closest === - Infinity){
+        closest = sumThree;
+        difference = Math.abs(closest - target);
+      }
+      // else if (Math.abs(sumThree - target) > difference){
+      //   console.log(Math.abs(sumThree -target))
+      //   return closest;
+      // }
+      else if(Math.abs(sumThree - target) < difference) {
+        closest = sumThree;
+        difference = Math.abs(closest - target);
+      }
+
+      if(sumThree > target){
+        k--;
+      }
+      else if(sumThree < target){
+        j++;
+      }
+      else {
+        return sumThree;
+      }
+    }
+  }
+
+  return closest;
+};
