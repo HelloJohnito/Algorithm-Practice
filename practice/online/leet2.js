@@ -244,3 +244,40 @@ var removeElement = function(nums, val) {
     }
     return nums.length;
 };
+
+////////////////////////////////////////////////////////
+//longest valid parentheses
+
+var longestValidParentheses = function(s) {
+  let stack = [];
+  let longest = 0;
+
+  for(let i = 0; i < s.length; i++){
+    if(s[i] === "("){
+      stack.push(i);
+    }
+    else if (s[i] === ")"){
+      if(s[stack[stack.length - 1]] === "("){
+        stack.pop();
+      }
+      else {
+        stack.push(i);
+      }
+    }
+  }
+
+  if(stack.length === 0){
+    return s.length;
+  }
+
+  let a = s.length;
+  let b = 0;
+  while(stack.length !== 0){
+    b = stack.pop();
+    longest = Math.max(longest, a-b-1);
+    a = b;
+  }
+
+  longest = Math.max(longest, a);
+  return longest;
+};
