@@ -185,3 +185,47 @@ var threeSumClosest = function(nums, target) {
 
   return closest;
 };
+
+///////////////////////////////////////////////
+// sum four true false
+
+var fourSum = function(nums, target) {
+  nums.sort(function(a,b){
+    return a - b;
+  });
+
+  for(let i = 0; i <= nums.length - 4; i++){
+    let j = i + 1;
+    let k = nums.length - 1;
+    let l = k - 1;
+
+    while(true){
+      let sumAll = nums[i] + nums[j] + nums[l] + nums[k];
+
+      if(sumAll === target){
+        return true;
+      }
+      else if(sumAll > target){
+
+        if(l - 1 > j){
+          l--;
+        }
+        else if(k - 1 > l){
+          k--;
+        }
+        else {
+          break;
+        }
+      }
+      else if(sumAll < target){
+        if(l - 1 > j){
+          j++;
+        }
+        else {
+          break;
+        }
+      }
+    }
+  }
+  return false;
+};
