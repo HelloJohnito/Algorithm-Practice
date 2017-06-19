@@ -229,3 +229,18 @@ var fourSum = function(nums, target) {
   }
   return false;
 };
+
+/////////////////////////////////////////////////////////
+// remove an element
+var removeElement = function(nums, val) {
+    let length = nums.length;
+
+    for(let i = 0; i < length; i++){
+        if(nums[i] === val){
+            nums.splice(i,1);
+            i--;
+            length--;
+        }
+    }
+    return nums.length;
+};
