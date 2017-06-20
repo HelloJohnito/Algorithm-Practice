@@ -77,3 +77,37 @@ function main() {
     }
     // console.log(answer)
 }
+
+//////////////////////////////////////////////////////////////
+// substring in word
+
+function stringSearch(fullString, subString) {
+  let startingIndex = -1;
+  let i = 0;
+  let j = 0;
+
+  while( i < fullString.length){
+    if(fullString[i] === subString[j]){
+      if(j === 0){
+        startingIndex = i;
+      }
+
+      j++;
+      i++;
+
+      if(j === subString.length){
+        return startingIndex;
+      }
+
+    } else {
+      if(startingIndex === -1){
+        i ++;
+      } else {
+        j = 0;
+        i = startingIndex + 1;
+        startingIndex = -1;
+      }
+    }
+  }
+  return -1;
+}
