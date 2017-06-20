@@ -281,3 +281,50 @@ var longestValidParentheses = function(s) {
   longest = Math.max(longest, a);
   return longest;
 };
+
+/////////////////////////////////////////////////////
+// search for index;
+
+var searchInsert = function(nums, target) {
+  for(let i = 0; i < nums.length; i ++){
+    if(nums[i] >= target){
+      return i;
+    }
+  }
+  return nums.length;
+};
+
+///////////////////////////////////////////////
+//swap head
+
+var swapPairs = function(head) {
+  if(head === null || head.next === null){
+    return head;
+  }
+
+  let a = null;
+  let b = head;
+  let c = b.next;
+  let newHead = b.next;
+
+  while(c !== null){
+    if(a !== null){
+      a.next = c;
+    }
+
+    b.next = c.next;
+    c.next = b;
+
+    a = b;
+    b = a.next;
+
+    if(b === null){
+      return newHead;
+    }
+    else {
+      c = b.next;
+    }
+  }
+
+  return newHead;
+};
