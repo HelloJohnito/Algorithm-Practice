@@ -328,3 +328,32 @@ var swapPairs = function(head) {
 
   return newHead;
 };
+
+///////////////////////////////////////////
+//longest Consecutive numbers in an array
+
+var longestConsecutive = function(arr) {
+  let largest = 0;
+  let container = new Set;
+
+  for(let i = 0; i < arr.length; i++){
+    container.add(arr[i]);
+  }
+
+  for(let i = 0; i < arr.length; i++){
+    let num = arr[i];
+    let count = 1;
+
+    if(!container.has(num-1)){
+      let more = num + 1;
+
+      while(container.has(more)){
+        count += 1;
+        more += 1;
+      }
+
+      largest = Math.max(largest , count);
+    }
+  }
+  return largest;
+}
