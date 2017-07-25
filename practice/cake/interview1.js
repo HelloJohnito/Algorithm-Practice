@@ -126,12 +126,12 @@ function mergeRanges(meetings) {
   let answer = [];
   let currentMeeting = sortedMeetings[0];
 
-  for(let i = 1; i < meetings.length; i++){
-    if(currentMeeting.endTime >= meetings[i].startTime){
-      currentMeeting = merge(currentMeeting, meetings[i]);
+  for(let i = 1; i < sortedMeetings.length; i++){
+    if(currentMeeting.endTime >= sortedMeetings[i].startTime){
+      currentMeeting = merge(currentMeeting, sortedMeetings[i]);
     } else {
       answer.push(currentMeeting);
-      currentMeeting = meetings[i];
+      currentMeeting = sortedMeetings[i];
     }
   }
   answer.push(currentMeeting);
