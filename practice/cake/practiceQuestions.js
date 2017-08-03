@@ -138,3 +138,106 @@ function changePossible(amount, denomination){
 
   return waysOfDoingNCent[amount];
 }
+
+
+
+// 6
+// rectangle Love
+
+// var myRectangle = {
+//   // coordinates of bottom-left corner
+//   leftX: 1,
+//   bottomY: 5,
+//   // width and height
+//   width: 10,
+//   height: 4,
+// };
+
+function rectangle(rec1, rec2){
+  let overlapX = overlap(rec1.leftX, rec1.width, rec2.leftX, rec2.width);
+  let overlapY = overlap(rec1.bottomY, rec1.height, rec2.bottomY, rec2.height);
+
+  if(overlapX.width === null || overlapY.width === null){
+   return {
+      leftX: null,
+      bottomY: null,
+      width: null,
+      height: null,
+    };
+  }
+
+  return {
+    leftX: overlapX.start,
+    bottomY: overlapY.start,
+    width: overlapX.width,
+    height: overlapY.height
+  };
+}
+
+function overlap(startPoint1, width1, startPoint2, width2){
+  let highestStartPoint = Math.max(startPoint1, startPoint2);
+  let lowestEndPoint = Math.min(startPoint1 + width1, startPoint2 + width2);
+
+  if(highestStartPoint >= lowestEndPoint){
+    return {start: null, width: null};
+  }
+
+  let overlapWidth = lowestEndPoint - highestStartPoint;
+  return {start: highestStartPoint, width: overlapWidth};
+}
+
+
+// 7
+// Write a class TempTracker with these methods:
+
+// insert()—records a new temperature
+// getMax()—returns the highest temp we've seen so far
+// getMin()—returns the lowest temp we've seen so far
+// getMean()—returns the mean ↴ of all temps we've seen so far
+// getMode()—returns a mode ↴ of all temps we've seen so far
+// Optimize for space and time. Favor speeding up the getter functions getMax(), getMin(), getMean(), and getMode() over speeding up the insert() function.
+
+
+function TempTracker(){
+  this.temp = {};
+  this.max = - Infinity;
+  this.min = Infinity;
+  this.sum = 0;
+  this.tempLength = 0;
+  this.mode = -Infinity;
+}
+
+TempTracker.prototype.insert = function(x){
+  this.sum += x;
+  this.tempLength += 1;
+
+  if(this.temp.hasOwnProperty(x)){
+    this.temp[x] = this.temp[x] += 1;
+  } else {
+    this.temp[x] = 1;
+  }
+
+  this.max = Math.max(this.max, x);
+  this.min = Math.min(this.min, x);
+
+  if(this.temp[x] > this.mode){
+    this.mode = this.temp[x];
+  }
+
+};
+
+TempTracker.prototype.getMax = function(){
+  return this.max;
+};
+
+TempTracker.prototype.getMin = function(){
+  return this.min;
+};
+
+TempTracker.prototype.mean = function(){
+  return this.sum/this.tempLength;
+};
+
+TempTracker.prototype.mode = function(){
+  return this.mode;
+};
