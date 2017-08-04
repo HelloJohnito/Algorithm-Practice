@@ -241,3 +241,53 @@ TempTracker.prototype.mean = function(){
 TempTracker.prototype.mode = function(){
   return this.mode;
 };
+
+
+// 7
+// Write a function to see if a binary tree ↴ is "superbalanced" (a new tree property we just made up).
+
+// function BinaryTreeNode(value) {
+//   this.value = value;
+//   this.left  = null;
+//   this.right = null;
+// }
+//
+// BinaryTreeNode.prototype.insertLeft = function(value) {
+//     this.left = new BinaryTreeNode(value);
+//     return this.left;
+// };
+//
+// BinaryTreeNode.prototype.insertRight = function(value) {
+//     this.right = new BinaryTreeNode(value);
+//     return this.right;
+// };
+
+function checkSuperTree(tree){
+  let maxDepth = 0;
+  let minDepth = 0;
+
+  let depthCount;
+  let stack = [{tree: tree, depth: 0}];
+
+  while (stack.length !== 0){
+    let treeNode = stack.pop();
+    if(treeNode.tree.left === null && treeNode.tree.right === null){
+      minDepth = Math.min(treeNode.depth, minDepth);
+      maxDepth = Math.max(treeNode.depth, maxDepth);
+
+      if(maxDepth - minDepth > 1){
+        return false;
+      }
+    }
+    if(treeNode.tree.left){
+      depthCount = treeNode.depth + 1;
+      stack.push({tree: treeNode.tree.left, depth: depthCount});
+    }
+    else if(treeNode.tree.right){
+      depthCount = treeNode.depth + 1;
+      stack.push({tree: treeNode.tree.right, depth: depthCount});
+    }
+  }
+
+  return true;
+}
