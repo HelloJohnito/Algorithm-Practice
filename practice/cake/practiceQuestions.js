@@ -291,3 +291,32 @@ function checkSuperTree(tree){
 
   return true;
 }
+
+// 8
+// Write a function to check that a binary tree ↴ is a valid binary search tree. ↴
+
+// DFS
+// track upper and lower bound
+
+function checkBinaryTree(n){
+  let stack = [{node: n, lowerBound: -Infinity, upperBound: Infinity}];
+
+  while(stack.length){
+    let currentNode = stack.pop();
+    let node = currentNode.node;
+    let lowerBound = currentNode.lowerBound;
+    let upperBound = currentNode.upperBound;
+
+    if(node.value <= lowerBound || node.value >= upperBound){
+      return false;
+    }
+
+    if(node.left){
+      stack.push({node: node.left, lowerBound: lowerBound, upperBound: node.value});
+    }
+    if(node.right){
+      stack.push({node: node.right, lowerBound: node.value, upperBound: upperBound});
+    }
+  }
+  return true;
+}
