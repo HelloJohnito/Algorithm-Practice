@@ -118,6 +118,29 @@ function merge(obj1, obj2){
   };
 }
 
+// interview solution
+function mergeRanges(array){
+  let sortedArray = array.slice().sort(function(a, b){
+    return a.startTime > b.startTime ? 1 : -1;
+  });
+
+  let answer = [sortedArray[0]];
+
+  for(let i = 1; i < sortedArray.length; i++){
+    let currentTime = sortedArray[i];
+    let previousTime = answer[answer.length - 1];
+
+    if(currentTime.startTime <= previousTime.endTime){
+      previousTime.endTime = Math.max(currentTime.endTime, previousTime.endTime);
+    }
+    else {
+      answer.push(currentTime);
+    }
+  }
+
+  return answer;
+}
+
 
 // 5
 // possible change
