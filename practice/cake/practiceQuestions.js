@@ -197,7 +197,6 @@ function overlap(startPoint1, width1, startPoint2, width2){
 // getMode()—returns a mode ↴ of all temps we've seen so far
 // Optimize for space and time. Favor speeding up the getter functions getMax(), getMin(), getMean(), and getMode() over speeding up the insert() function.
 
-
 function TempTracker(){
   this.temp = {};
   this.max = - Infinity;
@@ -243,7 +242,7 @@ TempTracker.prototype.mode = function(){
 };
 
 
-// 7
+// 8
 // Write a function to see if a binary tree ↴ is "superbalanced" (a new tree property we just made up).
 
 // function BinaryTreeNode(value) {
@@ -292,7 +291,7 @@ function checkSuperTree(tree){
   return true;
 }
 
-// 8
+// 9
 // Write a function to check that a binary tree ↴ is a valid binary search tree. ↴
 
 // DFS
@@ -319,4 +318,176 @@ function checkBinaryTree(n){
     }
   }
   return true;
+}
+
+// 10
+// Second largest item in the binary tree
+
+function secondLargest(node){
+  let previous;
+  let current = node;
+
+  // find the right most node
+  while(current.right){
+    previous = current;
+    current = current.right;
+  }
+
+  if(current.left){
+    current = current.left;
+    while(current.right){
+      current = current.right;
+    }
+    return current;
+  }
+
+  return previous;
+}
+
+// 11
+// I'm making a search engine called MillionGazillion™.
+// Trie
+
+var visited = {};
+function storage(word){
+
+  let current = visited;
+  for(let i = 0; i < word.length; i++){
+    let letter = word[i];
+    if(current[letter]){
+      current = current[letter];
+    }
+    else {
+      current[letter] = {};
+      current = current[letter];
+    }
+  }
+
+  if(!current.hasOwnProperty('end')){
+    current['end'] = 'end';
+  }
+
+  return visited;
+}
+
+
+// 12
+// Binary Search
+
+function binarySearch(array, target){
+  let midIndex = Math.floor(array.length/2);
+
+  if(array[midIndex] === target){
+    return midIndex;
+  }
+  else if(array[midIndex] > target){
+    return binarySearch(array.slice(0, midIndex), target);
+  }
+  else if(array[midIndex] < target){
+    let index = binarySearch(array.slice(midIndex+1), target);
+    return (index !== null) ? index + midIndex + 1 : null;
+  }
+
+ return null;
+}
+
+
+// 13
+// // Write a function for finding the index of the "rotation point," which is where I started working from the beginning of the dictionary. This array is huge (there are lots of words I don't know) so we want to be efficient here.
+
+// var words = [
+//   'retrograde',
+//   'supplant',
+//   'undulate',
+//   'xenoepist',
+//   'asymptote', // <-- rotates here!
+//   'babka',
+//   'banoffee',
+//   'engender',
+//   'karpatka',
+//   'othellolagkage',
+// ];
+
+function rotateDictionary(words){
+  let firstWord = words[0];
+  let floorIndex = 0;
+  let ceilingIndex = words.length - 1;
+
+  while(floorIndex < ceilingIndex){
+    let midIndex = Math.floor(floorIndex + (ceilingIndex - floorIndex)/2);
+
+    if(words[midIndex] < words[midIndex - 1]){
+      return midIndex;
+    }
+
+    if(words[midIndex] > firstWord){
+      //go right
+      floorIndex = midIndex + 1;
+    }
+    else {
+      //go left
+      ceilingIndex = midIndex - 1;
+    }
+  }
+
+  return ceilingIndex;
+}
+
+// 14
+// You've built an inflight entertainment system with on-demand movie streaming.
+// Users on longer flights like to start a second movie right when their first one ends, but they complain that the plane usually lands before they can see the ending. So you're building a feature for choosing two movies whose total runtimes will equal the exact flight length.
+//
+// Write a function that takes an integer flightLength (in minutes) and an array of integers movieLengths (in minutes) and returns a boolean indicating whether there are two numbers in movieLengths whose sum equals flightLength.
+
+function twoSum(movieTimes, flightTime){
+  let hash = {};
+
+  for(let i = 0; i < movieTimes.length; i++){
+    let movieTime = movieTimes[i];
+    if(hash.hasOwnProperty(movieTime)){
+      return true;
+    }
+
+    let difference = flightTime - movieTime;
+    hash[difference] = true;
+  }
+
+  return false;
+}
+
+// 15
+// fib
+var memo = {};
+function fib(num){
+  if(num === 0 || num === 1){
+    return num;
+  }
+
+  if(memo.hasOwnProperty(num)){
+    return memo[num];
+  }
+
+  let result = fib(num - 1) + fib(num - 2);
+
+  memo[num] = result;
+  return result
+}
+
+
+
+function fib(num) {
+  if(num === 0 || num === 1){
+    return num;
+  }
+
+  let prevprev = 0;
+  let previous = 1;
+  let current;
+
+  for(let i = 1; i < num; i++){
+    current = previous + prevprev;
+    prevprev = previous;
+    previous = current;
+  }
+  return current;
 }
