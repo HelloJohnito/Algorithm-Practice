@@ -222,11 +222,11 @@ function overlap(startPoint1, width1, startPoint2, width2){
 
 function TempTracker(){
   this.temp = {};
-  this.max = - Infinity;
-  this.min = Infinity;
+  this.max = null;
+  this.min = null;
   this.sum = 0;
   this.tempLength = 0;
-  this.mode = -Infinity;
+  this.mode = null;
 }
 
 TempTracker.prototype.insert = function(x){
@@ -241,11 +241,7 @@ TempTracker.prototype.insert = function(x){
 
   this.max = Math.max(this.max, x);
   this.min = Math.min(this.min, x);
-
-  if(this.temp[x] > this.mode){
-    this.mode = this.temp[x];
-  }
-
+  this.mode = Math.max(this.mode, this.temp[x]);
 };
 
 TempTracker.prototype.getMax = function(){
