@@ -514,3 +514,60 @@ function fib(num) {
   }
   return current;
 }
+
+// 16
+// cake thief
+
+function maxDuffelBagValue(cakeTypes, capacity){
+
+  let maxCapacityHolder = [];
+  for(let i = 0; i <= capacity; i++){
+    maxCapacityHolder.push(0);
+  }
+
+  for(let currentPointer = 0; currentPointer < maxCapacityHolder.length; currentPointer++){
+    let maxValue = 0;
+
+    for(let k = 0; k < cakeTypes.length; k++){
+      let cake = cakeTypes[k];
+
+      if(cake.weight <= currentPointer){
+        let currentValue = cake.value + maxCapacityHolder[currentPointer - cake.weight];
+        maxValue = Math.max(maxValue, currentValue);
+      }
+
+      maxCapacityHolder[currentPointer]= maxValue;
+    }
+  }
+
+  return maxCapacityHolder[capacity];
+}
+
+//17
+// what does this print out
+
+var text = 'outside';
+function logIt(){
+    console.log(text);
+    var text = 'inside';
+}
+
+// 18
+// what is wrong with this? 
+
+<button id="btn-0">Button 1!</button>
+<button id="btn-1">Button 2!</button>
+<button id="btn-2">Button 3!</button>
+
+<script type="text/javascript">
+    var prizes = ['A Unicorn!', 'A Hug!', 'Fresh Laundry!'];
+    for (var btnNum = 0; btnNum < prizes.length; btnNum++) {
+        // for each of our buttons, when the user clicks it...
+        document.getElementById('btn-' + btnNum).onclick = function() {
+            // tell her what she's won!
+            alert(prizes[btnNum]);
+        };
+    }
+</script>
+
+//
