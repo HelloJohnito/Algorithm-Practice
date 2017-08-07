@@ -400,6 +400,9 @@ function binarySearch(array, target){
   if(array[midIndex] === target){
     return midIndex;
   }
+  if(array.length === 1){
+    return null;
+  }
   else if(array[midIndex] > target){
     return binarySearch(array.slice(0, midIndex), target);
   }
