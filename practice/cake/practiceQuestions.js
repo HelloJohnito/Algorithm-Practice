@@ -553,7 +553,7 @@ function logIt(){
 }
 
 // 18
-// what is wrong with this? 
+// what is wrong with this?
 
 <button id="btn-0">Button 1!</button>
 <button id="btn-1">Button 2!</button>
@@ -570,4 +570,141 @@ function logIt(){
     }
 </script>
 
-//
+
+// 19
+// Implement a queue ↴ with 2 stacks. ↴ Your queue should have an enqueue and a dequeue function and it should be "first in first out" (FIFO)
+
+// enqueue: push into inStack
+// dequeue: if outStack is empty, push all inStack items into outStack
+              // pop from outStack
+
+function Queue(){
+  this.inStack = [];
+  this.outStack = [];
+}
+
+Queue.prototype.enqueue = function(el){
+  this.inStack.push(el);
+}
+
+Queue.prototype.dequeue = function(){
+  if(this.outStack.length === 0){
+    while(this.inStack.length !== 0){
+      let item = this.inStack.pop();
+      this.outStack.push(item);
+    }
+    if(this.outStack.length === 0){
+      return undefined;
+    }
+  }
+
+  return this.outStack.pop();
+}
+
+
+// 20
+// You want to be able to access the largest element in a stack.
+// You've already implemented this Stack class:
+
+function Stack() {
+    // initialize an empty array
+    this.items = [];
+}
+
+// push a new item to the last index
+Stack.prototype.push = function(item) {
+    this.items.push(item);
+};
+
+// remove the last item
+Stack.prototype.pop = function() {
+
+    // if the stack is empty, return null
+    // (it would also be reasonable to throw an exception)
+    if (!this.items.length) {
+        return null;
+    }
+    return this.items.pop();
+};
+
+// see what the last item is
+Stack.prototype.peek = function() {
+    if (!this.items.length) {
+        return null;
+    }
+    return this.items[this.items.length -1];
+};
+
+
+// Use your Stack class to implement a new class MaxStack with a function getMax() that returns the largest element in the stack. getMax() should not remove the item.
+
+class MaxStack(){
+  initialize(){
+    this.stack = new Stack;
+    this.maxTracker = new Stack;
+  }
+
+  push(el){
+    if(this.maxTracker.peek() && this.maxTracker.peek() <= el){
+      this.maxTracker.push(el)
+    }
+
+    this.stack.push(el);
+  }
+
+  pop(){
+    let item = this.stack.pop();
+    if(this.maxTracker.peek() && this.maxTracker.peek() === item){
+      this.maxTracker.pop();
+    }
+    return item;
+  }
+
+  getMax(){
+    return this.maxTracker[this.maxTracker.length - 1];
+  }
+}
+
+// 21
+// Given the array of IDs, which contains many duplicate integers and one unique integer, find the unique integer.
+
+function findUnique(array){
+  let unique = 0;
+
+  for(let i = 0; i < array.length; i++){
+    unique ^= array[i];
+  }
+
+  return unique;
+}
+
+
+// 22
+// Delete a node from a singly-linked list, ↴ given only a variable pointing to that node.
+// The input could, for example, be the variable b below:
+
+function LinkedListNode(value) {
+    this.value = value;
+    this.next = null;
+}
+
+var a = new LinkedListNode('A');
+var b = new LinkedListNode('B');
+var c = new LinkedListNode('C');
+a.next = b;
+b.next = c;
+
+function deleteNode(node){
+  let next = node.next;
+
+  if(next){
+    node.value = next.value;
+    node.next = next.next;
+  } else {
+    throw new Error("can not delete the last node");
+  }
+
+  return node;
+}
+
+// 23
