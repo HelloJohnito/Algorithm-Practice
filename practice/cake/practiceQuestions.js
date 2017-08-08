@@ -708,3 +708,127 @@ function deleteNode(node){
 }
 
 // 23
+
+// You have a singly-linked list ↴ and want to check if it contains a cycle.
+function LinkedListNode(value) {
+  this.value = value;
+  this.next = null;
+}
+
+let a = new LinkedListNode('A');
+let b = new LinkedListNode('B');
+let c = new LinkedListNode('C');
+let d = new LinkedListNode('D');
+let e = new LinkedListNode('E');
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = c;
+
+function checkCycle(node){
+  let slowRunner = node;
+  let fastRunner = node.next.next;
+
+  while(slowRunner && fastRunner !== null){
+    if(slowRunner.value === fastRunner.value){
+      return true;
+    }
+    slowRunner = slowRunner.next;
+    fastRunner = fastRunner.next.next;
+  }
+
+  return false;
+}
+
+// 24
+// Write a function for reversing a linked list. ↴ Do it in-place. ↴
+// Your function will have one input: the head of the list.
+// Your function should return the new head of the list.
+// Here's a sample linked list node class:
+
+function LinkedListNode(value) {
+  this.value = value;
+  this.next = null;
+}
+
+let a = new LinkedListNode('A');
+let b = new LinkedListNode('B');
+let c = new LinkedListNode('C');
+
+a.next = b;
+b.next = c;
+
+function reverse(node){
+  let previous = null;
+  let current = node;
+  let next = null;
+
+  while(current){
+    next = current.next;
+    current.next = previous;
+
+    previous = current;
+    current = next;
+  }
+
+  return previous;
+}
+
+// 25
+// Write a function kthToLastNode() that takes an integer kk and the headNode of a singly-linked list, and returns the kkth to last node in the list.
+
+function LinkedListNode(value) {
+    this.value = value;
+    this.next = null;
+}
+
+var a = new LinkedListNode("Angel Food");
+var b = new LinkedListNode("Bundt");
+var c = new LinkedListNode("Cheese");
+var d = new LinkedListNode("Devil's Food");
+var e = new LinkedListNode("Eccles");
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+
+function kthToLastNode(num, head){
+  let current = head;
+  let fast = head;
+
+  for(let i = 0; i < num; i++){
+    fast = fast.next;
+  }
+
+  while(fast){
+    current = current.next;
+    fast = fast.next;
+  }
+
+  return current.value;
+}
+
+kthToLastNode(2, a);
+
+
+// 26
+// Reverse String
+function reverseInPlace(string){
+  let a = string.split("")
+
+  let startIndex = 0;
+  let endIndex = string.length - 1;
+
+  while(startIndex < endIndex){
+    let temp = a[startIndex];
+    a[startIndex] = a[endIndex];
+    a[endIndex] = temp;
+    startIndex ++;
+    endIndex --;
+  }
+
+  return a.join("");
+}
