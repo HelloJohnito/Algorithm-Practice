@@ -147,6 +147,38 @@ function merge(meetingOne, meetingTwo){
 
 // mergeRanges(times)
 
+//solution 2
+function mergeRanges(meetings){
+  let output = [];
+  let previous = meetings[0];
+
+  let sortedMeetings = meetings.slice().sort(
+    (a,b) => a.startTime > b.startTime ? 1 : -1
+  );
+
+  for(let i = 1; i < sortedMeetings.length; i++){
+
+    if(previous.endTime >= sortedMeetings[i].startTime){
+      output.push(merge(previous, sortedMeetings[i]));
+      i+= 1;
+    } else {
+      output.push(previous);
+    }
+
+    previous = sortedMeetings[i];
+  }
+  return output
+}
+
+
+function merge(obj1, obj2){
+  return {
+    startTime: Math.min(obj1.startTime, obj2.startTime),
+    endTime: Math.max(obj1.endTime, obj2.endTime)
+  };
+}
+
+
 // let times = [
 //   {startTime: 0,  endTime: 1},
 //   {startTime: 3,  endTime: 5},
@@ -185,6 +217,27 @@ function mergeRanges(meetings) {
 }
 ///////////////////////////////////////////////////////////////////
 
+function changePossibilitiesBottomUp(amount, denominations) {
+
+  // intialize an array of zeros with indices up to amount
+  var waysOfDoingNcents = [];
+  for (var i = 0; i <= amount; i++) {
+      waysOfDoingNcents[i] = 0;
+  }
+  waysOfDoingNcents[0] = 1;
+
+  denominations.forEach(function(coin) {
+      for (var higherAmount = coin; higherAmount <= amount; higherAmount++) {
+          var higherAmountRemainder = higherAmount - coin;
+          waysOfDoingNcents[higherAmount] += waysOfDoingNcents[higherAmountRemainder];
+      }
+  });
+
+  return waysOfDoingNcents[amount];
+}
+
+
+///////////////////////////////////////////////////////////////////
 
 //Find the area of the overlap between two rectangle
 
@@ -408,6 +461,37 @@ function balancedTree(tree){
 }
 
 // balancedTree(a)
+
+
+function checkSuperTree(tree){
+  if(!tree.right && !tree.left) return true;
+
+  let maxDepth = null;
+  let minDepth = null;
+  let stack = [{node:tree, depth: 0}];
+
+  while(stack.length){
+    let node = stack.pop();
+    let currentNode = node.node;
+    let currentDepth = node.depth;
+
+    if(!currentNode.left && !currentNode.right){
+      maxDepth = Math.max(maxDepth, currentDepth);
+      minDepth = Math.min(minDepth, currentDepth);
+
+      if(maxDepth !== 0 && minDepth !== 0){
+        if(maxDepth - minDepth >= 2){
+          return false;
+        }
+      }
+    }
+
+    if(currentNode.left) stack.push({node: currentNode.left, depth: currentDepth + 1});
+    if(currentNode.right) stack.push({node: currentNode.right, depth: currentDepth + 1})
+  }
+  return true;
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////

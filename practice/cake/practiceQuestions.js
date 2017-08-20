@@ -9,12 +9,18 @@
 // keep track of profit
 
 function getMaxProfit(stockPricesYesterday){
-  let lowest
-  // let profit = 0;
-  //
-  // for(let i = 0; i < stockPricesYesterday.length; i++){
-  //   let current = stockPricesYesterday[i];
-  // }
+  let lowest = stockPricesYesterday[0];
+  let profit = 0;
+
+  for(let i = 1; i < stockPricesYesterday.length; i++){
+    let current = stockPricesYesterday[i];
+    let possibleCurrent = current - lowest;
+
+    profit = Math.max(profit, possibleCurrent);
+    lowest = Math.min(lowest, current);
+  }
+
+  return profit;
 }
 
 //2
@@ -25,7 +31,24 @@ function getMaxProfit(stockPricesYesterday){
 
 
 function productOfEveryIntegers(integers){
+  let answer = [];
+  for(let i = 0; i < integers.length; i++){
+    answer.push(1);
+  }
 
+  let value = integers[0];
+  for(let i = 1; i < integers.length; i++){
+    answer[i] *= value;
+    value *= integers[i];
+  }
+
+  let valueReverse = integers[integers.length - 1];
+  for(let i = integers.length - 2; i >= 0 ; i++){
+    answer[i] *= valueReverse;
+    valueReverse *= integers[i];
+  }
+
+  return answer;
 }
 
 
@@ -34,7 +57,23 @@ function productOfEveryIntegers(integers){
 // Given an array of integers, find the highest product you can get from three of the integers.
 
 function highestThreeProduct(array){
+  let highestThree = array[0] * array[1] * array[2];
+  let highestTwo = array[0] * array[1];
+  let lowestTwo = array[0] * array[1];
+  let higest = Math.max(array[0], array[1]);
+  let lowest = Math.min(array[0], array[1]);
 
+  for(let i = 2; i < array.length; i++){
+    let current = array[i];
+
+    highestThree = Math.max(highestThree, highestTwo * current, lowestTwo * current);
+    highestTwo = Math.max(highestTwo, highest * current, lowest * current);
+    lowestTwo = Math.min(lowestTwo, highestTwo * current, lowest * current);
+    highest = Math.max(highest, current);
+    lowest = Math.min(lowest, current);
+  }
+
+  return highestThree;
 }
 
 // 4
@@ -55,17 +94,57 @@ function highestThreeProduct(array){
 // ]
 
 
-function mergeRanges(array){
+function mergeRanges(meetings){
+  let output = [];
+  let previous = meetings[0];
+
+  let sortedMeetings = meetings.slice().sort(
+    (a,b) => a.startTime > b.startTime ? 1 : -1
+  );
+
+  for(let i = 1; i < sortedMeetings.length; i++){
+
+    if(previous.endTime >= sortedMeetings[i].startTime){
+      output.push(merge(previous, sortedMeetings[i]));
+      i+= 1;
+    } else {
+      output.push(previous);
+    }
+
+    previous = sortedMeetings[i];
+  }
+  return output
+}
+
+
+function merge(obj1, obj2){
+  return {
+    startTime: Math.min(obj1.startTime, obj2.startTime),
+    endTime: Math.max(obj1.endTime, obj2.endTime)
+  }
 }
 
 
 // 5
 // possible change
 
-function changePossible(amount, denomination){
+function changePossible(amount, denominations){
+  let holder = [];
+  for(let i = 0; i <= amount; i++){
+    holder.push(0);
+  }
+  holder[0] = 1;
 
+  for(let i = 0; i < denominations.length; i++){
+    let coin = denominations[i];
+    for(let j = coin; j <= amount; j++){
+      let remainder = j - coin;
+      holder[j] += holder[remainder];
+    }
+  }
+
+  return holder[amount];
 }
-
 
 
 // 6
@@ -81,6 +160,7 @@ function changePossible(amount, denomination){
 // };
 
 function rectangle(rec1, rec2){
+
 }
 
 
@@ -95,7 +175,58 @@ function rectangle(rec1, rec2){
 // Optimize for space and time. Favor speeding up the getter functions getMax(), getMin(), getMean(), and getMode() over speeding up the insert() function.
 
 function TempTracker(){
+  this.temp = [];
+  this.max = null;
+  this.min = null;
+  this.sum = 0;
+  this.length = 0;
+  this.countHolder = {};
+  this.mode = null;
 }
+
+TempTracker.prototype.insert = function(num){
+  this.temp.push(num);
+
+  if(this.max === null || this.max > num){
+    this.max = num;
+  }
+  if(this.min === null || this.min < num){
+    this.min = num;
+  }
+
+  this.sum += num;
+  this.length += 1;
+
+  if(this.countHolder[num]){
+    this.countHolder[num] += 1;
+  } else {
+    this.countHolder[num] = 1;
+  }
+
+  if(this.mode === null){
+    this.mode = num;
+  }
+  else if(this.countHolder[this.mode] < this.countHolder[num]){
+    this.mode = num;
+  }
+}
+
+TempTracker.prototype.getMax = function(){
+  return this.max;
+}
+
+TempTracker.prototype.getMin = function(){
+  return this.min;
+}
+
+TempTracker.prototype.getMode = function(){
+  return this.mode;
+}
+
+TempTracker.prototype.getMean = function(){
+  return this.sum/this.length;
+}
+
 
 // 8
 // Write a function to see if a binary tree ↴ is "superbalanced" (a new tree property we just made up).
@@ -118,8 +249,34 @@ function TempTracker(){
 // };
 
 function checkSuperTree(tree){
+  if(!tree.right && !tree.left) return true;
 
+  let maxDepth = null;
+  let minDepth = null;
+  let stack = [{node:tree, depth: 0}];
+
+  while(stack.length){
+    let node = stack.pop();
+    let currentNode = node.node;
+    let currentDepth = node.depth;
+
+    if(!currentNode.left && !currentNode.right){
+      maxDepth = Math.max(maxDepth, currentDepth);
+      minDepth = Math.min(minDepth, currentDepth);
+
+      if(maxDepth !== 0 && minDepth !== 0){
+        if(maxDepth - minDepth >= 2){
+          return false;
+        }
+      }
+    }
+
+    if(currentNode.left) stack.push({node: currentNode.left, depth: currentDepth + 1});
+    if(currentNode.right) stack.push({node: currentNode.right, depth: currentDepth + 1})
+  }
+  return true;
 }
+
 
 // 9
 // Write a function to check that a binary tree ↴ is a valid binary search tree. ↴
