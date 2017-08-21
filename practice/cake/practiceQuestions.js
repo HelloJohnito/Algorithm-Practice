@@ -285,14 +285,47 @@ function checkSuperTree(tree){
 // track upper and lower bound
 
 function checkBinaryTree(n){
+  let stack = [{node: n, upper: Infinity, lower: -Infinity}];
 
+  while(stack.length){
+    let current = stack.pop();
+    let currentNode = current.node;
+
+    if(currentNode.value > current.upper || currentNode.value < current.lower){
+      return false;
+    }
+
+    if(currentNode.left){
+      stack.push({node: currentNode.left, upper: currentNode.value, lower: current.lower});
+    }
+    if(currentNode.right){
+      stack.push({node: currentNode.right, upper: current.upper, lower: currentNode.value});
+    }
+  }
+  return true;
 }
 
 // 10
-// Second largest item in the binary tree
+// Second largest item in the binary search tree
 
 function secondLargest(node){
+  let current = node;
+  let previous = null;
 
+  while(current.right){
+    previous = current
+    current = current.right
+  }
+  if(!current.left) {
+    return previous;
+  }
+  else {
+    current = current.left;
+    while(current.right){
+      current = current.right;
+    }
+    return current;
+  }
 }
 
 // 11

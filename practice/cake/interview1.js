@@ -487,7 +487,7 @@ function checkSuperTree(tree){
     }
 
     if(currentNode.left) stack.push({node: currentNode.left, depth: currentDepth + 1});
-    if(currentNode.right) stack.push({node: currentNode.right, depth: currentDepth + 1})
+    if(currentNode.right) stack.push({node: currentNode.right, depth: currentDepth + 1});
   }
   return true;
 }
