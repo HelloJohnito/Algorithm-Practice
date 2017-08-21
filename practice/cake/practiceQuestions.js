@@ -332,8 +332,25 @@ function secondLargest(node){
 // I'm making a search engine called MillionGazillion™.
 // Trie
 
-function storage(word){
+function visitedSite(site, visited){
+  let currentPointer = visited || {};
+  let isNewWord = false;
 
+  for(let i = 0; i < site.length; i++){
+    let letter = site[i];
+    if(currentPointer[letter]){
+      currentPointer = currentPointer[letter];
+    } else {
+      isNewWord = true;
+      currentPointer[letter] = {};
+      currentPointer = currentPointer[letter];
+    }
+  }
+
+  if(!currentPointer['end']){
+    currentPointer['end'] = 'end'
+  }
+  return isNewWord;
 }
 
 
@@ -341,7 +358,18 @@ function storage(word){
 // Binary Search
 
 function binarySearch(array, target){
+  let midIndex = Math.floor(array.length / 2);
+  if(array[midIndex] === target) return midIndex;
 
+  if(array[midIndex] < target){
+    let result = binarySearch(array.slice(midIndex + 1), target);
+    return (result !== null) ? result + midIndex + 1 : null;
+  }
+  else if(array[midIndex] > target){
+    return binarySearch(array.slice(0, midIndex), target);
+  }
+
+  return null;
 }
 
 
@@ -362,7 +390,21 @@ function binarySearch(array, target){
 // ];
 
 function rotateDictionary(words){
+  let firstWord = words[0];
+  let startIndex = 0;
+  let endIndex = words.length - 1;
 
+  while(startIndex < endIndex){
+    let midIndex = Math.floor(startIndex + (endIndex - startIndex)/ 2);
+    if(words[midIndex] < firstWord){
+      if(words[midIndex] < words[midIndex-1]) return midIndex;
+      endIndex = midIndex;
+    } else {
+      startIndex = midIndex;
+    }
+  }
+
+  return null;
 }
 
 // 14
@@ -371,21 +413,37 @@ function rotateDictionary(words){
 //
 // Write a function that takes an integer flightLength (in minutes) and an array of integers movieLengths (in minutes) and returns a boolean indicating whether there are two numbers in movieLengths whose sum equals flightLength.
 
-function twoSum(movieTimes, flightTime){
+function twoSum(array, target){
+  let memo = {};
 
+  for(let i = 0; i < array.length; i++){
+    let num = array[i];
+    if(memo[target - num]) return true;
+    memo[num] = true;
+  }
+  return false;
 }
 
 // 15
 // fib
 
-function fib(num){
-
+function fibRecursive(num){
+  if(num === 0 || num === 1) return num;
+  return fib(num - 1) + fib(num - 2);
 }
 
 
+function fibIterative(num) {
+  let current = 0;
+  let next = 1;
+  let temp;
 
-function fib(num) {
-
+  for(let i = 0; i < num; i++){
+    temp = next;
+    next = current + next;
+    current = temp;
+  }
+  return current;
 }
 
 ///////////////////////////////////////////////////////////////
