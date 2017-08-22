@@ -601,13 +601,7 @@ class MaxStack(){
 // Given the array of IDs, which contains many duplicate integers and one unique integer, find the unique integer.
 
 function findUnique(array){
-  let unique = 0;
 
-  for(let i = 0; i < array.length; i++){
-    unique ^= array[i];
-  }
-
-  return unique;
 }
 
 
@@ -627,16 +621,7 @@ a.next = b;
 b.next = c;
 
 function deleteNode(node){
-  let next = node.next;
 
-  if(next){
-    node.value = next.value;
-    node.next = next.next;
-  } else {
-    throw new Error("can not delete the last node");
-  }
-
-  return node;
 }
 
 // 23
@@ -660,18 +645,7 @@ d.next = e;
 e.next = c;
 
 function checkCycle(node){
-  let slowRunner = node;
-  let fastRunner = node.next.next;
 
-  while(slowRunner && fastRunner !== null){
-    if(slowRunner.value === fastRunner.value){
-      return true;
-    }
-    slowRunner = slowRunner.next;
-    fastRunner = fastRunner.next.next;
-  }
-
-  return false;
 }
 
 // 24
@@ -693,19 +667,7 @@ a.next = b;
 b.next = c;
 
 function reverse(node){
-  let previous = null;
-  let current = node;
-  let next = null;
 
-  while(current){
-    next = current.next;
-    current.next = previous;
-
-    previous = current;
-    current = next;
-  }
-
-  return previous;
 }
 
 // 25
@@ -728,19 +690,7 @@ c.next = d;
 d.next = e;
 
 function kthToLastNode(num, head){
-  let current = head;
-  let fast = head;
 
-  for(let i = 0; i < num; i++){
-    fast = fast.next;
-  }
-
-  while(fast){
-    current = current.next;
-    fast = fast.next;
-  }
-
-  return current.value;
 }
 
 kthToLastNode(2, a);
@@ -749,18 +699,5 @@ kthToLastNode(2, a);
 // 26
 // Reverse String
 function reverseInPlace(string){
-  let a = string.split("")
 
-  let startIndex = 0;
-  let endIndex = string.length - 1;
-
-  while(startIndex < endIndex){
-    let temp = a[startIndex];
-    a[startIndex] = a[endIndex];
-    a[endIndex] = temp;
-    startIndex ++;
-    endIndex --;
-  }
-
-  return a.join("");
 }
