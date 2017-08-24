@@ -601,8 +601,13 @@ class MaxStack(){
 // Given the array of IDs, which contains many duplicate integers and one unique integer, find the unique integer.
 
 function findUnique(array){
-
+  let unique = 0;
+  for(let i = 0; i < array.length; i++){
+    unique ^= array[i];
+  }
+  return unique;
 }
+
 
 
 // 22
@@ -621,7 +626,10 @@ a.next = b;
 b.next = c;
 
 function deleteNode(node){
-
+  let next = node.next;
+  node.value = next.value;
+  node.next = next.next;
+  return node
 }
 
 // 23
