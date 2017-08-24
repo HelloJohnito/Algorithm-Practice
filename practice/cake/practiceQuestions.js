@@ -653,7 +653,19 @@ d.next = e;
 e.next = c;
 
 function checkCycle(node){
+  let fast = node.next.next;
+  let slow = node;
 
+  while(fast !== null || fast !== slow){
+    fast = fast.next.next;
+    slow = slow.next;
+  }
+
+  if(fast === slow){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // 24
